@@ -34,6 +34,8 @@ import store from "./store";
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 var app = createApp({});
+import CKEditor from '@ckeditor/ckeditor5-vue';
+// import CkEditor from '@ckeditor/ckeditor5-vue';
 // app.component('example-component', require('./components/ExampleComponents.vue').default);
-app.use(store).use(router).use(VueAxios, axios).mount("#app");
+app.use(store).use(router).use(CKEditor).use(VueAxios, axios).mount("#app");
 // app.mount('#app');

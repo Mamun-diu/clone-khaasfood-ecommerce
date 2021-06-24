@@ -8,8 +8,8 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><router-link :to="{name: 'Dashboard'}">Home</router-link></li>
-                    <li class="breadcrumb-item active">dashboard</li>
+                    <li class="breadcrumb-item">Home</li>
+
                     </ol>
                 </div>
                 </div>
@@ -21,11 +21,15 @@
 <script>
 export default {
     computed: {
-        
+
     },
 }
 </script>
 
 <style>
-
+    .content-header{
+        box-shadow: 0px 0px 10px 0px black;
+        padding: 10px 1rem !important;
+        margin-bottom: 10px;
+    }
 </style>
