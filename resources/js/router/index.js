@@ -19,7 +19,7 @@ const routes = [
     component: () => import("../views/admin/tags/create.vue"),
   },
   {
-    path: "/admin/tags/edit",
+    path: "/admin/tags/edit/:id",
     name: "TagEdit",
     component: () => import("../views/admin/tags/edit.vue"),
   },

@@ -39,7 +39,7 @@ Route::middleware(['auth:sanctum','verified'])->group(function(){
 // Create route for Admin
 Route::middleware(['auth:sanctum','verified','authadmin'])->group(function(){
 
-    Route::get('/{catchall?}', function () {
+    Route::get('/admin/{catchall?}', function () {
         return view('admin.master');
     })->where('catchall', '(.*)');
     Route::prefix('admin')->group(function () {

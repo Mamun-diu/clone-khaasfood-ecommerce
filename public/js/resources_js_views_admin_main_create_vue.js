@@ -12,6 +12,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      main: {
+        name: null,
+        image: null
+      },
+      nameError: null,
+      fileError: null
+    };
+  },
+  methods: {
+    createMain: function createMain() {
+      var _this = this;
+
+      axios.post('/api/tag', this.tag).then(function (res) {
+        if (res.data.status == 'failed') {
+          _this.nameError = res.data.message.name[0];
+          _this.fileError = res.data.message.file[0];
+        } else {
+          _this.nameError = null;
+          _this.fileError = null;
+          _this.tag.name = null;
+          toastr.success('Tag inserted succssfully.');
+        }
+      });
+    },
+    imageUpload: function imageUpload(e) {
+      var file = e.target.files[0]; // Do some client side validation...
+
+      this.main.image = file;
+    }
+  },
   computed: {}
 });
 
@@ -94,7 +126,43 @@ var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 
 var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Go back");
 
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"card-body\"><form action=\"\"><div class=\"form-group\"><label for=\"mainCategory\">Category name</label><input type=\"text\" class=\"form-control\" id=\"mainCategory\" placeholder=\"Enter main-category name\"></div><div class=\"mb-3\"><label for=\"formFile\" class=\"form-label\">Category image</label><input class=\"form-control-file\" type=\"file\" id=\"formFile\"></div><button class=\"btn btn-primary w-100\" type=\"submit\">Save</button></form></div>", 1);
+var _hoisted_19 = {
+  "class": "card-body"
+};
+var _hoisted_20 = {
+  "class": "form-group"
+};
+
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
+  "for": "mainCategory"
+}, "Category name", -1
+/* HOISTED */
+);
+
+var _hoisted_22 = {
+  key: 0
+};
+var _hoisted_23 = {
+  "class": "mb-3"
+};
+
+var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
+  "for": "formFile",
+  "class": "form-label"
+}, "Category image", -1
+/* HOISTED */
+);
+
+var _hoisted_25 = {
+  key: 0
+};
+
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  "class": "btn btn-primary w-100",
+  type: "submit"
+}, "Save", -1
+/* HOISTED */
+);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
@@ -133,7 +201,42 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  })]), _hoisted_19])])])])]);
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
+    onSubmit: _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+      return $options.createMain && $options.createMain.apply($options, arguments);
+    }, ["prevent"]))
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_20, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+      return $data.main.name = $event;
+    }),
+    type: "text",
+    "class": "form-control",
+    id: "mainCategory",
+    placeholder: "Enter main-category name"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.main.name]]), $data.nameError ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("p", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+    "class": "text-danger",
+    textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.nameError)
+  }, null, 8
+  /* PROPS */
+  , ["textContent"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+    onChange: _cache[2] || (_cache[2] = function () {
+      return $options.imageUpload && $options.imageUpload.apply($options, arguments);
+    }),
+    "class": "form-control-file",
+    type: "file",
+    id: "formFile"
+  }, null, 32
+  /* HYDRATE_EVENTS */
+  ), $data.fileError ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("p", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+    "class": "text-danger",
+    textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.fileError)
+  }, null, 8
+  /* PROPS */
+  , ["textContent"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), _hoisted_26], 32
+  /* HYDRATE_EVENTS */
+  )])])])])])]);
 }
 
 /***/ }),

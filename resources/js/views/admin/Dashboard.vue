@@ -32,4 +32,12 @@ export default {
         padding: 10px 1rem !important;
         margin-bottom: 10px;
     }
+    /* .toastr{
+        position: fixed;
+        right : 20px;
+        top : 20px;
+        border-radius: 5px;
+        font-size : 18px;
+        z-index: 1035;
+    } */
 </style>

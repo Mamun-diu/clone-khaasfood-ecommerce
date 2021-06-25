@@ -4,12 +4,23 @@ import { createStore } from "vuex";
 export default createStore({
   state: {
     number : 12,
+    allTag : [],
+
   },
   getters: {
-
+    tagPaginate:(state)=>(start, limit)=>{
+        var tagPagin = state.allTag.slice(start,limit);
+        var paginate = Math.ceil(state.allTag.length/(limit-start));
+        return {
+            paginationData: tagPagin,
+            paginationValue: paginate
+        }
+    }
   },
   mutations: {
-
+    getAllTag(state,payload){
+        state.allTag = payload;
+    }
   },
   actions: {
     // login(context,payload){
@@ -26,6 +37,12 @@ export default createStore({
     //   });
 
     // },
+    getAllTag(context){
+        axios.get('/api/tag')
+        .then(res => {
+            context.commit('getAllTag',res.data);
+        })
+    }
 
   },
   modules: {},
