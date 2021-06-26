@@ -14,4 +14,8 @@ class KhaasSubCategory extends Model
         'main_category_id',
         'name',
     ];
+
+    public function main(){
+        return $this->hasOne(KhaasMainCategory::class, 'id', 'main_category_id');
+    }
 }

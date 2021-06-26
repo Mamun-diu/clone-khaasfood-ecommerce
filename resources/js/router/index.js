@@ -35,7 +35,7 @@ const routes = [
     component: () => import("../views/admin/main/create.vue"),
   },
   {
-    path: "/admin/main/edit",
+    path: "/admin/main/edit/:id",
     name: "MainEdit",
     component: () => import("../views/admin/main/edit.vue"),
   },
@@ -51,7 +51,7 @@ const routes = [
     component: () => import("../views/admin/sub/create.vue"),
   },
   {
-    path: "/admin/sub/edit",
+    path: "/admin/sub/edit/:id",
     name: "SubEdit",
     component: () => import("../views/admin/sub/edit.vue"),
   },
@@ -67,7 +67,7 @@ const routes = [
     component: () => import("../views/admin/heroes/create.vue"),
   },
   {
-    path: "/admin/hero/edit",
+    path: "/admin/hero/edit/:id",
     name: "HeroEdit",
     component: () => import("../views/admin/heroes/edit.vue"),
   },
@@ -83,7 +83,7 @@ const routes = [
     component: () => import("../views/admin/blogs/create.vue"),
   },
   {
-    path: "/admin/blog/edit",
+    path: "/admin/blog/edit/:id",
     name: "BlogEdit",
     component: () => import("../views/admin/blogs/edit.vue"),
   },
@@ -99,7 +99,7 @@ const routes = [
     component: () => import("../views/admin/images/create.vue"),
   },
   {
-    path: "/admin/image/edit",
+    path: "/admin/image/edit/:id",
     name: "ImageEdit",
     component: () => import("../views/admin/images/edit.vue"),
   },
@@ -115,7 +115,7 @@ const routes = [
     component: () => import("../views/admin/products/create.vue"),
   },
   {
-    path: "/admin/product/edit",
+    path: "/admin/product/edit/:id",
     name: "ProductEdit",
     component: () => import("../views/admin/products/edit.vue"),
   },

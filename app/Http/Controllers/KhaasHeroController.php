@@ -35,7 +35,20 @@ class KhaasHeroController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'image' => 'required',
+        ]);
+
+
+        $hero = new KhaasHeroController();
+        if($request->image){
+            $imageName = time().'_'. uniqid() .'.'.$request->image->getClientOriginalExtension();
+            $request->image->move(public_path('/storage/admin'), $imageName);
+            $hero->image = 'storage/admin/' . $imageName;
+        }
+        $hero->status = $request->status;
+        $hero->save();
+        return response()->json(200);
     }
 
     /**

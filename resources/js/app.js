@@ -59,8 +59,6 @@ toastr.options = {
 var app = createApp({});
 import CKEditor from '@ckeditor/ckeditor5-vue';
 
-import JwPagination from 'jw-vue-pagination';
-
 // import CkEditor from '@ckeditor/ckeditor5-vue';
 // app.component('example-component', require('./components/ExampleComponents.vue').default);
 app.use(store).use(router).use(CKEditor).use(toastr).use(VueAxios, axios).mount("#app");

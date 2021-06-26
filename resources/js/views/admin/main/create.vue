@@ -29,13 +29,13 @@
                         <form @submit.prevent="createMain">
                             <div class="form-group">
                                 <label for="mainCategory">Category name</label>
-                                <input v-model="main.name" type="text" class="form-control" id="mainCategory" placeholder="Enter main-category name">
-                                <p v-if="nameError"> <span class="text-danger" v-text="nameError"></span> </p>
+                                <input v-model="form.name" type="text" class="form-control" id="mainCategory" placeholder="Enter main-category name">
+                                <div class="text-danger" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
                             </div>
                             <div class="mb-3">
                                 <label for="formFile" class="form-label">Category image</label>
-                                <input @change="imageUpload" class="form-control-file" type="file" id="formFile">
-                                <p v-if="fileError"> <span class="text-danger" v-text="fileError"></span> </p>
+                                <input  @change="imageUpload" class="form-control-file" type="file" id="formFile">
+                                <div class="text-danger" v-if="form.errors.has('image')" v-html="form.errors.get('image')" />
                             </div>
                             <button class="btn btn-primary w-100" type="submit">Save</button>
                         </form>
@@ -49,36 +49,30 @@
 </template>
 
 <script>
+import Form from 'vform'
 export default {
     data(){
         return{
-            main:{
-                name: null,
-                image: null,
-            },
-            nameError: null,
-            fileError: null,
+            form: new Form({
+                name: '',
+                image: ''
+            })
         }
     },
     methods:{
-        createMain(){
-            axios.post('/api/tag',this.tag)
-            .then(res =>{
-                if(res.data.status == 'failed'){
-                    this.nameError = res.data.message.name[0];
-                    this.fileError = res.data.message.file[0];
-                }else{
-                    this.nameError = null;
-                    this.fileError = null;
-                    this.tag.name = null
-                    toastr.success('Tag inserted succssfully.')
-                }
-            })
+        async createMain(){
+            const response = await this.form.post('/api/main')
+            if(response){
+                // console.log(response);
+                toastr.success('Category inserted succssfully.')
+                this.form.name = null;
+                this.form.image = null;
+            }
         },
         imageUpload(e) {
             const file = e.target.files[0]
             // Do some client side validation...
-            this.main.image = file
+            this.form.image = file
         },
 
     },

@@ -43,7 +43,7 @@
 
                     </div>
                     <nav class="d-flex justify-content-center" aria-label="Page navigation example">
-                            <ul class="pagination bg-danger" >
+                            <ul class="pagination " >
                                 <li @click.prevent="getPage('prev')" class="page-item"><a class="page-link" href="#">Previous</a></li>
                                 <li @click.prevent="getPage(index)" :class="(index == page)?'active':''" class="page-item" v-for="index in paginateValue" :key="index"><a  class="page-link" href="#">{{ index }}</a></li>
                                 <li @click.prevent="getPage('next')" class="page-item"><a class="page-link" href="#">Next</a></li>
@@ -116,8 +116,8 @@ export default {
         getTag(){
             var start = (this.page-1)*this.limit
             var end = start+this.limit
-            this.paginateValue = this.$store.getters.tagPaginate(start,end).paginationValue;
-            return this.$store.getters.tagPaginate(start,end);
+            this.paginateValue = this.$store.getters.tagPaginate("Tag",start,end).paginationValue;
+            return this.$store.getters.tagPaginate("Tag",start,end);
         }
     },
     mounted() {

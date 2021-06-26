@@ -26,21 +26,21 @@
                         <router-link :to="{name: 'Sub'}" class="btn  btn-outline-light text-dark float-right">Go back</router-link>
                     </div>
                     <div class="card-body">
-                        <form action="">
+                        <form @submit.prevent="createCategory">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="inputGroupSelect01">Main category</label>
                                 </div>
-                                <select class="custom-select" id="inputGroupSelect01">
-                                    <option selected>Choose...</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                <select v-model="form.mainCategory" class="custom-select" id="inputGroupSelect01">
+                                    <option selected value="0">Choose...</option>
+                                    <option v-for="main in mainData" :key="main.id" :value="main.id">{{ main.name }} </option>
+
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="subCategory">Category name</label>
-                                <input type="text" class="form-control" id="subCategory" placeholder="Enter sub-category name">
+                                <input v-model="form.subCategory" type="text" class="form-control" id="subCategory" placeholder="Enter sub-category name">
+                                <div class="text-danger" v-if="form.errors.has('subCategory')" v-html="form.errors.get('subCategory')" />
                             </div>
                             <button class="btn btn-primary w-100" type="submit">Save</button>
                         </form>
@@ -54,9 +54,44 @@
 </template>
 
 <script>
+import Form from 'vform'
 export default {
+    data(){
+        return{
+            form: new Form({
+                mainCategory: 0,
+                subCategory: null,
+            }),
+
+            mainData : {},
+        }
+    },
+    methods: {
+        getMain(){
+            axios.get('/api/sub')
+            .then(res => {
+                this.mainData = res.data.main;
+            })
+        },
+        async createCategory(){
+            if(this.form.mainCategory == 0){
+                toastr.error("Select a main category");
+            }else{
+                const response = await this.form.post('/api/sub')
+                if(response){
+                    toastr.success("Sub category created");
+                    this.form.mainCategory = 0;
+                    this.form.subCategory = null;
+                }
+            }
+
+        }
+    },
     computed: {
 
+    },
+    mounted() {
+        this.getMain();
     },
 }
 </script>

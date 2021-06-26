@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KhaasMainCategory;
 use App\Models\KhaasSubCategory;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,12 @@ class KhaasSubCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $main = KhaasMainCategory::all();
+        $sub = KhaasSubCategory::with('main')->orderBy('id','DESC')->get();
+        return response()->json([
+            'main' => $main,
+            'sub' => $sub,
+        ]);
     }
 
     /**
@@ -35,7 +41,15 @@ class KhaasSubCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'subCategory' => 'required|unique:khaas_sub_categories,name',
+        ]);
+
+        $sub = new KhaasSubCategory();
+        $sub->main_category_id = $request->mainCategory;
+        $sub->name = $request->subCategory;
+        $sub->save();
+        return response()->json(200);
     }
 
     /**
@@ -55,9 +69,10 @@ class KhaasSubCategoryController extends Controller
      * @param  \App\Models\KhaasSubCategory  $khaasSubCategory
      * @return \Illuminate\Http\Response
      */
-    public function edit(KhaasSubCategory $khaasSubCategory)
+    public function edit($id)
     {
-        //
+        $sub = KhaasSubCategory::find($id);
+        return response()->json($sub);
     }
 
     /**
@@ -67,9 +82,17 @@ class KhaasSubCategoryController extends Controller
      * @param  \App\Models\KhaasSubCategory  $khaasSubCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, KhaasSubCategory $khaasSubCategory)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'subCategory' => 'required|unique:khaas_sub_categories,name,'.$id,
+        ]);
+
+        $sub = KhaasSubCategory::find($id);
+        $sub->main_category_id = $request->mainCategory;
+        $sub->name = $request->subCategory;
+        $sub->save();
+        return response()->json(200);
     }
 
     /**
@@ -78,8 +101,9 @@ class KhaasSubCategoryController extends Controller
      * @param  \App\Models\KhaasSubCategory  $khaasSubCategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(KhaasSubCategory $khaasSubCategory)
+    public function destroy($id)
     {
-        //
+        KhaasSubCategory::destroy($id);
+        return response()->json(200);
     }
 }

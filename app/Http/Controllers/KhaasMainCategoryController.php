@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\KhaasMainCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class KhaasMainCategoryController extends Controller
 {
@@ -14,7 +15,8 @@ class KhaasMainCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $main = KhaasMainCategory::orderBy('id','DESC')->get();
+        return response()->json($main);
     }
 
     /**
@@ -35,7 +37,23 @@ class KhaasMainCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return response()->json($request->all());
+        $this->validate($request, [
+            'name' => 'required',
+            'image' => 'required',
+        ]);
+
+
+        $main = new KhaasMainCategory();
+        if($request->image){
+            $imageName = time().'_'. uniqid() .'.'.$request->image->getClientOriginalExtension();
+            $request->image->move(public_path('/storage/admin'), $imageName);
+            $main->image = 'storage/admin/' . $imageName;
+        }
+        $main->name = $request->name;
+        $main->save();
+        return response()->json(200);
+
     }
 
     /**
@@ -55,9 +73,10 @@ class KhaasMainCategoryController extends Controller
      * @param  \App\Models\KhaasMainCategory  $khaasMainCategory
      * @return \Illuminate\Http\Response
      */
-    public function edit(KhaasMainCategory $khaasMainCategory)
+    public function edit($id)
     {
-        //
+        $main = KhaasMainCategory::find($id);
+        return response()->json($main,200);
     }
 
     /**
@@ -67,9 +86,27 @@ class KhaasMainCategoryController extends Controller
      * @param  \App\Models\KhaasMainCategory  $khaasMainCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, KhaasMainCategory $khaasMainCategory)
+    public function update(Request $request, $id)
     {
-        //
+
+        $this->validate($request, [
+            'name' => 'required',
+            // 'image' => 'required',
+        ]);
+
+
+        $main = KhaasMainCategory::find($id);
+
+        if($request->image){
+            unlink($main->image);
+            $imageName = time().'_'. uniqid() .'.'.$request->image->getClientOriginalExtension();
+            $request->image->move(public_path('/storage/admin'), $imageName);
+            $main->image = 'storage/admin/' . $imageName;
+
+        }
+        $main->name = $request->name;
+        $main->save();
+        return response()->json(200);
     }
 
     /**
@@ -78,8 +115,15 @@ class KhaasMainCategoryController extends Controller
      * @param  \App\Models\KhaasMainCategory  $khaasMainCategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(KhaasMainCategory $khaasMainCategory)
+    public function destroy($id)
     {
-        //
+        $main = KhaasMainCategory::find($id);
+        if($main->image){
+            unlink($main->image);
+        }
+        $main->delete();
+        return response()->json(200);
+
+
     }
 }

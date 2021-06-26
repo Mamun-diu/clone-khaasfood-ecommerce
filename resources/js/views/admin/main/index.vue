@@ -27,22 +27,30 @@
                     <div class="card-body">
                         <table class="table">
                             <tr>
-                                <th>#SL</th>
+                                <th>ID</th>
                                 <th>Name</th>
                                 <th>Image</th>
                                 <th>Action</th>
                             </tr>
-                            <tr>
-                                <td>01</td>
-                                <td>New</td>
-                                <td>Image</td>
+                            <tr v-for="data in getMain.paginationData" :key="data.id">
+                                <td>{{ data.id }} </td>
+                                <td>{{ data.name }} </td>
+                                <td><img width="60" :src="'/'+data.image" alt=""> </td>
                                 <td>
-                                    <button class="btn btn-sm btn-info mr-1">Edit</button>
-                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                    <router-link :to="{name: 'MainEdit', params:{id:data.id}}" class="btn btn-sm btn-info mr-1">Edit</router-link>
+                                    <button @click="deleteMain(data.id)" class="btn btn-sm btn-danger">Delete</button>
                                 </td>
                             </tr>
                         </table>
                     </div>
+                    <nav class="d-flex justify-content-center" aria-label="Page navigation example">
+                            <ul class="pagination " >
+                                <li @click.prevent="getPage('prev')" class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                <li @click.prevent="getPage(index)" :class="(index == page)?'active':''" class="page-item" v-for="index in paginateValue" :key="index"><a  class="page-link" href="#">{{ index }}</a></li>
+                                <li @click.prevent="getPage('next')" class="page-item"><a class="page-link" href="#">Next</a></li>
+                                <!-- <li  class="page-item" v-if="i%3==0">{{ (i/10)+1 }} </li> -->
+                            </ul>
+                    </nav>
                 </div>
                 </div>
             </div>
@@ -51,10 +59,72 @@
     </div>
 </template>
 
+
 <script>
 export default {
-    computed: {
+    data(){
+        return{
+            page: 1,
+            limit: 5,
+            paginateValue : null,
+        }
+    },
+    methods: {
+        getAllMain(){
+            this.$store.dispatch('getAllMain');
+        },
+        getPage(page){
+            if(this.page == 1 && page=='prev'){
+                this.page = 1;
+            }else if(this.page > 1 && page=='prev'){
+                this.page -= 1
+            }
+            else if(this.page == this.paginateValue && page == 'next'){
+                this.page = this.paginateValue;
+            }else if(this.page < this.paginateValue && page == 'next'){
+                this.page += 1;
+            }else{
+                this.page = page
+            }
+        },
+        deleteMain(id){
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You will not be able to recover this imaginary file!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, keep it'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.delete(`/api/main/${id}`)
+                    .then(()=>{
+                        this.getAllMain();
+                        // console.log(res);
+                        toastr.success("Your data is deleted")
+                    })
 
+
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire(
+                    'Cancelled',
+                    'Your imaginary file is safe :)',
+                    'error'
+                    )
+                }
+            })
+        }
+    },
+    computed: {
+        getMain(){
+            var start = (this.page-1)*this.limit
+            var end = start+this.limit
+            this.paginateValue = this.$store.getters.tagPaginate("Main", start,end).paginationValue;
+            return this.$store.getters.tagPaginate("Main", start,end);
+        }
+    },
+    mounted() {
+        this.getAllMain();
     },
 }
 </script>
