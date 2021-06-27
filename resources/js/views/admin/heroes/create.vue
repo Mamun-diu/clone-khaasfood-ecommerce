@@ -69,7 +69,6 @@ export default {
             if(response){
                 // console.log(response);
                 toastr.success('Hero inserted succssfully.')
-                this.form.status = null;
                 this.form.image = null;
             }
         },

@@ -77,7 +77,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (response) {
                   toastr.success("Sub category created");
-                  _this2.form.mainCategory = 0;
                   _this2.form.subCategory = null;
                 }
 

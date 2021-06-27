@@ -125,8 +125,8 @@ export default {
         getSub(){
             var start = (this.page-1)*this.limit
             var end = start+this.limit
-            this.paginateValue = this.$store.getters.tagPaginate("Sub", start,end).paginationValue;
-            return this.$store.getters.tagPaginate("Sub", start,end);
+            this.paginateValue = this.$store.getters.paginate("Sub", start,end).paginationValue;
+            return this.$store.getters.paginate("Sub", start,end);
         }
     },
     mounted(){

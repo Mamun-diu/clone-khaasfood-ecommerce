@@ -80,7 +80,6 @@ export default {
                 const response = await this.form.post('/api/sub')
                 if(response){
                     toastr.success("Sub category created");
-                    this.form.mainCategory = 0;
                     this.form.subCategory = null;
                 }
             }

@@ -44,12 +44,12 @@
                         </table>
                     </div>
                     <nav class="d-flex justify-content-center" aria-label="Page navigation example">
-                            <ul class="pagination " >
-                                <li @click.prevent="getPage('prev')" class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                <li @click.prevent="getPage(index)" :class="(index == page)?'active':''" class="page-item" v-for="index in paginateValue" :key="index"><a  class="page-link" href="#">{{ index }}</a></li>
-                                <li @click.prevent="getPage('next')" class="page-item"><a class="page-link" href="#">Next</a></li>
-                                <!-- <li  class="page-item" v-if="i%3==0">{{ (i/10)+1 }} </li> -->
-                            </ul>
+                        <ul class="pagination " >
+                            <li @click.prevent="getPage('prev')" class="page-item"><a class="page-link" href="#">Previous</a></li>
+                            <li @click.prevent="getPage(index)" :class="(index == page)?'active':''" class="page-item" v-for="index in paginateValue" :key="index"><a  class="page-link" href="#">{{ index }}</a></li>
+                            <li @click.prevent="getPage('next')" class="page-item"><a class="page-link" href="#">Next</a></li>
+                            <!-- <li  class="page-item" v-if="i%3==0">{{ (i/10)+1 }} </li> -->
+                        </ul>
                     </nav>
                 </div>
                 </div>
@@ -119,8 +119,8 @@ export default {
         getMain(){
             var start = (this.page-1)*this.limit
             var end = start+this.limit
-            this.paginateValue = this.$store.getters.tagPaginate("Main", start,end).paginationValue;
-            return this.$store.getters.tagPaginate("Main", start,end);
+            this.paginateValue = this.$store.getters.paginate("Main", start,end).paginationValue;
+            return this.$store.getters.paginate("Main", start,end);
         }
     },
     mounted() {

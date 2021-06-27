@@ -26,21 +26,21 @@
                         <router-link :to="{name: 'Hero'}" class="btn  btn-outline-light text-dark float-right">Go back</router-link>
                     </div>
                     <div class="card-body">
-                        <form action="">
+                        <form @submit.prevent="updateHero">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="inputGroupSelect01">Status</label>
                                 </div>
-                                <select class="custom-select" id="inputGroupSelect01">
-                                    <option selected>Choose...</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                <select v-model="form.status" class="custom-select" id="inputGroupSelect01">
+                                    <option value="publish">Publish</option>
+                                    <option value="draft">Draft</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="hero">Hero image</label>
-                                <input type="file"  id="image" class="form-control-file">
+                                <input @change="imageUpload" type="file"  id="image" class="form-control-file">
+                                <div class="text-danger" v-if="form.errors.has('image')" v-html="form.errors.get('image')" />
+                                <img width="100" :src="'/'+oldImage" alt="">
                             </div>
                             <button class="btn btn-primary w-100" type="submit">Update</button>
                         </form>
@@ -54,9 +54,49 @@
 </template>
 
 <script>
+import Form from 'vform'
 export default {
+    data(){
+        return{
+            form: new Form({
+                status: 'publish',
+                image: '',
+                _method: 'put',
+            }),
+            oldImage: null,
+        }
+    },
+    methods:{
+        getHero(){
+            var id = this.$route.params.id;
+            axios.get(`/api/hero/${id}/edit`)
+            .then(res => {
+                this.form.status = res.data.status;
+                this.oldImage = res.data.image;
+            })
+        },
+        async updateHero(){
+            let id= this.$route.params.id;
+            const response = await this.form.post(`/api/hero/${id}`)
+            if(response){
+                // console.log(response);
+                toastr.success('Hero updated succssfully.')
+                this.form.image = null;
+                this.$router.push({name: 'Hero'})
+            }
+        },
+        imageUpload(e) {
+            const file = e.target.files[0]
+            // Do some client side validation...
+            this.form.image = file
+        },
+
+    },
     computed: {
 
+    },
+    mounted() {
+        this.getHero();
     },
 }
 </script>

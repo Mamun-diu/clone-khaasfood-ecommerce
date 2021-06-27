@@ -21,4 +21,17 @@ class KhaasProduct extends Model
         'description'
 
     ];
+
+    public function images(){
+        return $this->hasMany(KhaasImage::class,'product_id','id');
+    }
+    public function main(){
+        return $this->hasOne(KhaasMainCategory::class,'id','main_category_id');
+    }
+    public function sub(){
+        return $this->hasOne(KhaasSubCategory::class,'id','sub_category_id');
+    }
+    public function tag(){
+        return $this->hasOne(KhaasTag::class, 'id','tag_id');
+    }
 }

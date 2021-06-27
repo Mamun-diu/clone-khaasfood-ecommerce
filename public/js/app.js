@@ -23854,25 +23854,37 @@ __webpack_require__.r(__webpack_exports__);
     number: 12,
     allTag: [],
     allMain: [],
-    allSub: []
+    allSub: [],
+    allHero: [],
+    allBlog: [],
+    allProduct: []
   },
   getters: {
-    tagPaginate: function tagPaginate(state) {
+    paginate: function paginate(state) {
       return function (table, start, limit) {
         if (table == "Tag") {
-          var tagPagin = state.allTag.slice(start, limit);
-          var paginate = Math.ceil(state.allTag.length / (limit - start));
+          var pagniateNumber = state.allTag.slice(start, limit);
+          var paginateData = Math.ceil(state.allTag.length / (limit - start));
         } else if (table == "Main") {
-          var tagPagin = state.allMain.slice(start, limit);
-          var paginate = Math.ceil(state.allMain.length / (limit - start));
+          var pagniateNumber = state.allMain.slice(start, limit);
+          var paginateData = Math.ceil(state.allMain.length / (limit - start));
         } else if (table == "Sub") {
-          var tagPagin = state.allSub.slice(start, limit);
-          var paginate = Math.ceil(state.allSub.length / (limit - start));
+          var pagniateNumber = state.allSub.slice(start, limit);
+          var paginateData = Math.ceil(state.allSub.length / (limit - start));
+        } else if (table == "Hero") {
+          var pagniateNumber = state.allHero.slice(start, limit);
+          var paginateData = Math.ceil(state.allHero.length / (limit - start));
+        } else if (table == "Blog") {
+          var pagniateNumber = state.allBlog.slice(start, limit);
+          var paginateData = Math.ceil(state.allBlog.length / (limit - start));
+        } else if (table == "Product") {
+          var pagniateNumber = state.allProduct.slice(start, limit);
+          var paginateData = Math.ceil(state.allProduct.length / (limit - start));
         }
 
         return {
-          paginationData: tagPagin,
-          paginationValue: paginate
+          paginationData: pagniateNumber,
+          paginationValue: paginateData
         };
       };
     }
@@ -23886,6 +23898,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     getAllSub: function getAllSub(state, payload) {
       state.allSub = payload;
+    },
+    getAllHero: function getAllHero(state, payload) {
+      state.allHero = payload;
+    },
+    getAllBlog: function getAllBlog(state, payload) {
+      state.allBlog = payload;
+    },
+    getAllProduct: function getAllProduct(state, payload) {
+      state.allProduct = payload;
     }
   },
   actions: {
@@ -23915,6 +23936,21 @@ __webpack_require__.r(__webpack_exports__);
     getAllSub: function getAllSub(context) {
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/sub').then(function (res) {
         context.commit('getAllSub', res.data.sub);
+      });
+    },
+    getAllHero: function getAllHero(context) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/hero').then(function (res) {
+        context.commit('getAllHero', res.data);
+      });
+    },
+    getAllBlog: function getAllBlog(context) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/blog').then(function (res) {
+        context.commit('getAllBlog', res.data);
+      });
+    },
+    getAllProduct: function getAllProduct(context) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/product').then(function (res) {
+        context.commit('getAllProduct', res.data.product);
       });
     }
   },

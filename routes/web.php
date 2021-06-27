@@ -53,6 +53,7 @@ Route::middleware(['auth:sanctum','verified','authadmin'])->group(function(){
         Route::resource('main', KhaasMainCategoryController::class);
         Route::resource('sub', KhaasSubCategoryController::class);
         Route::resource('product', KhaasProductController::class);
+        Route::get('/product/sub/{id}', [KhaasProductController::class, 'getSubCategory']);
 
     });
 });

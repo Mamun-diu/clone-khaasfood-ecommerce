@@ -26,7 +26,7 @@
                         <router-link :to="{name: 'Product'}" class="btn  btn-outline-light text-dark float-right">Go back</router-link>
                     </div>
                     <div class="card-body">
-                        <form action="">
+                        <form @submit.prevent="updateProduct">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="card">
@@ -35,44 +35,42 @@
                                                 <div class="input-group-prepend">
                                                     <label class="input-group-text" for="mainCategory">Main category</label>
                                                 </div>
-                                                <select class="custom-select" id="mainCategory">
-                                                    <option selected>Choose...</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
+                                                <select v-model="form.mainId" @change="getSub(form.mainId)" class="custom-select" id="mainCategory">
+                                                    <option value="">Choose main</option>
+                                                    <option v-for="data in main" :key="data.id" :value="data.id">{{ data.name }} </option>
+
                                                 </select>
+                                                <div class="text-danger w-100" v-if="form.errors.has('mainId')" v-html="form.errors.get('mainId')" />
                                             </div>
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <label class="input-group-text" for="subCategory">Sub category</label>
                                                 </div>
-                                                <select class="custom-select" id="subCategory">
-                                                    <option selected>Choose...</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
+                                                <select v-model="form.subId" class="custom-select" id="subCategory">
+                                                    <option value="">Choose sub</option>
+                                                    <option v-for="data in sub" :key="data.id" :value="data.id">{{ data.name }}</option>
+
                                                 </select>
+                                                <div class="text-danger w-100" v-if="form.errors.has('subId')" v-html="form.errors.get('subId')" />
                                             </div>
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
-                                                    <label class="input-group-text" for="tag">Tag</label>
+                                                    <label class="input-group-text" for="tags">Tag</label>
                                                 </div>
-                                                <select class="custom-select" id="tag">
-                                                    <option selected>Choose...</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
+                                                <select v-model="form.tagId" class="custom-select" id="tags">
+                                                    <option value="">Choose tag</option>
+                                                    <option v-for="data in tag" :key="data.id" :value="data.id">{{ data.name }}</option>
+
                                                 </select>
+                                                <div class="text-danger w-100" v-if="form.errors.has('tagId')" v-html="form.errors.get('tagId')" />
                                             </div>
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <label class="input-group-text" for="status">Status</label>
                                                 </div>
-                                                <select class="custom-select" id="status">
-                                                    <option selected>Choose...</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
+                                                <select v-model="form.status" class="custom-select" id="status">
+                                                    <option value="publish">Publish</option>
+                                                    <option value="draft">Draft</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -85,25 +83,29 @@
                                                 <div class="input-group-prepend">
                                                     <label class="input-group-text" for="title">Title</label>
                                                 </div>
-                                                <input type="text" class="form-control" id="title" placeholder="Enter product title">
+                                                <input  v-model="form.title" type="text" class="form-control" id="title" placeholder="Enter product title">
+                                                <div class="text-danger w-100 w-100" v-if="form.errors.has('title')" v-html="form.errors.get('title')" />
                                                 </div>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <label class="input-group-text" for="price">Price</label>
                                                     </div>
-                                                    <input type="number" class="form-control" id="price" placeholder="Enter product price">
+                                                    <input v-model="form.price" type="number" class="form-control" id="price" placeholder="Enter product price">
+                                                    <div class="text-danger w-100" v-if="form.errors.has('price')" v-html="form.errors.get('price')" />
                                                 </div>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <label class="input-group-text" for="quantity">Quantity</label>
                                                     </div>
-                                                    <input type="text" class="form-control" id="quantity" placeholder="Enter product quantity">
+                                                    <input v-model="form.quantity" type="text" class="form-control" id="quantity" placeholder="Enter product quantity">
+                                                    <div class="text-danger w-100" v-if="form.errors.has('quantity')" v-html="form.errors.get('quantity')" />
                                                 </div>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <label class="input-group-text" for="discount">Discount</label>
                                                     </div>
-                                                    <input type="number" class="form-control" id="discount" placeholder="Enter product discount">
+                                                    <input v-model="form.discount" type="number" class="form-control" id="discount" placeholder="Enter product discount">
+                                                    <div class="text-danger w-100" v-if="form.errors.has('discount')" v-html="form.errors.get('discount')" />
                                                 </div>
                                             </div>
                                         </div>
@@ -113,25 +115,26 @@
                                         <div class="card-body">
                                             <div class="mb-3">
                                                 <label for="firstImage" class="form-label">First image</label>
-                                                <input class="form-control-file" type="file" id="firstImage" style="border: 1px solid #ddd;padding: 2px;">
+                                                <input @change="imageUpload1" class="form-control-file" type="file" id="firstImage" style="border: 1px solid #ddd;padding: 2px;">
+                                                <div class="text-danger w-100" v-if="form.errors.has('image1')" v-html="form.errors.get('image1')" />
+                                                <img width="100" :src="'/'+form.oldImage1" alt="">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="secondImage" class="form-label">Second image</label>
-                                                <input class="form-control-file" type="file" id="secondImage" style="border: 1px solid #ddd;padding: 2px;">
+                                                <input @change="imageUpload2" class="form-control-file" type="file" id="secondImage" style="border: 1px solid #ddd;padding: 2px;">
+                                                <div class="text-danger w-100" v-if="form.errors.has('image2')" v-html="form.errors.get('image2')" />
+                                                <img width="100" :src="'/'+form.oldImage2" alt="">
                                             </div>
                                         </div>
                                     </div>
-
-
                                 </div>
 
                                 <div class="col-12 py-3">
-                                    <ckeditor class="" :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
+                                    <ckeditor class="" :editor="editor" v-model="form.description" :config="editorConfig"></ckeditor>
+                                    <div class="text-danger w-100" v-if="form.errors.has('description')" v-html="form.errors.get('description')" />
                                 </div>
                                 <button class="btn btn-primary w-100" type="submit">Update</button>
                             </div>
-
-
                         </form>
                     </div>
                 </div>
@@ -143,20 +146,113 @@
 </template>
 
 <script>
-    import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import Form from 'vform'
+export default {
+    data(){
+        return{
+            form: new Form({
+                mainId: '',
+                subId: '',
+                tagId: '',
+                title: null,
+                price: null,
+                quantity: null,
+                discount: null,
+                status: 'publish',
+                image1: '',
+                image2: '',
+                description: '<p>Your data will be here.</p>',
+                _method: 'put',
+                oldImage1:null,
+                oldImage2:null,
+            }),
+            editor: ClassicEditor,
 
-    export default {
-        name: 'app',
-        data() {
-            return {
-                editor: ClassicEditor,
-                editorData: '<p>Content of the editor.</p>',
-                editorConfig: {
-                    // The configuration of the editor.
-                }
-            };
+            editorConfig: {
+                // The configuration of the editor.
+            },
+            main:{},
+            sub:{},
+            tag:{},
+
         }
-    };
+    },
+    methods:{
+        getAllData(){
+            axios.get('/api/product')
+            .then(res => {
+                this.main = res.data.main;
+                this.tag = res.data.tag;
+            })
+        },
+        getSub(id){
+            axios.get(`/api/product/sub/${id}`)
+            .then(res => {
+                this.sub = res.data;
+                // this.form.subId = '';
+            })
+        },
+        getProduct(){
+            var id = this.$route.params.id;
+            axios.get(`/api/product/${id}/edit`)
+            .then(res => {
+                this.form.mainId =  res.data.main_category_id;
+                this.form.subId =  res.data.sub_category_id;
+                this.form.tagId =  res.data.tag_id;
+                this.form.title =  res.data.title;
+                this.form.price =  res.data.price;
+                this.form.quantity =  res.data.quantity;
+                this.form.discount =  res.data.discount;
+                this.form.status =  res.data.status;
+                this.form.description =  res.data.description;
+                this.form.oldImage1 = res.data.images[0].image;
+                this.form.oldImage2 = res.data.images[1].image;
+            })
+        },
+        async updateProduct(){
+            var id = this.$route.params.id;
+            const response = await this.form.post(`/api/product/${id}`)
+            if(response){
+                toastr.success('Product updated succssfully.')
+                this.form.mainId = '';
+                this.form.subId = '';
+                this.form.tagId = '';
+                this.form.title = null;
+                this.form.price = null;
+                this.form.quantity = null;
+                this.form.discount = null;
+                this.form.status = 'publish';
+                this.form.image1 = '';
+                this.form.image2 = '';
+                this.form.description = '<p>Your data will be here...</p>';
+                this.$router.push({name: 'Product'})
+            }
+        },
+        imageUpload1(e) {
+            const file = e.target.files[0]
+            // Do some client side validation...
+            this.form.image1 = file
+        },
+        imageUpload2(e) {
+            const file = e.target.files[0]
+            // Do some client side validation...
+            this.form.image2 = file
+        },
+
+    },
+    computed: {
+
+    },
+    mounted(){
+        this.getAllData();
+        this.getProduct();
+        setTimeout(() => {
+            this.getSub(this.form.mainId);
+        }, 1000);
+
+    }
+}
 </script>
 
 <style>

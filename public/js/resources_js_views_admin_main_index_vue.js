@@ -64,8 +64,8 @@ __webpack_require__.r(__webpack_exports__);
     getMain: function getMain() {
       var start = (this.page - 1) * this.limit;
       var end = start + this.limit;
-      this.paginateValue = this.$store.getters.tagPaginate("Main", start, end).paginationValue;
-      return this.$store.getters.tagPaginate("Main", start, end);
+      this.paginateValue = this.$store.getters.paginate("Main", start, end).paginationValue;
+      return this.$store.getters.paginate("Main", start, end);
     }
   },
   mounted: function mounted() {

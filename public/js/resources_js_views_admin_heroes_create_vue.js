@@ -60,7 +60,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 if (response) {
                   // console.log(response);
                   toastr.success('Hero inserted succssfully.');
-                  _this.form.status = null;
                   _this.form.image = null;
                 }
 

@@ -37,7 +37,8 @@
                                 <input  @change="imageUpload" class="form-control-file" type="file" id="formFile">
                                 <div class="text-danger" v-if="form.errors.has('image')" v-html="form.errors.get('image')" />
                             </div>
-                            <button class="btn btn-primary w-100" type="submit">Save</button>
+                            <button class="btn btn-primary w-50" type="submit">Save</button>
+                            <button class="btn btn-danger w-50" type="reset">Reset</button>
                         </form>
                     </div>
                 </div>

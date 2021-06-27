@@ -185,9 +185,16 @@ var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 );
 
 var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-  "class": "btn btn-primary w-100",
+  "class": "btn btn-primary w-50",
   type: "submit"
 }, "Save", -1
+/* HOISTED */
+);
+
+var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  "class": "btn btn-danger w-50",
+  type: "reset"
+}, "Reset", -1
 /* HOISTED */
 );
 
@@ -263,7 +270,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     innerHTML: $data.form.errors.get('image')
   }, null, 8
   /* PROPS */
-  , ["innerHTML"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), _hoisted_24], 32
+  , ["innerHTML"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), _hoisted_24, _hoisted_25], 32
   /* HYDRATE_EVENTS */
   )])])])])])]);
 }

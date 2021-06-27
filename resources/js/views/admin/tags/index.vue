@@ -31,7 +31,7 @@
                                 <th>Name</th>
                                 <th>Action</th>
                             </tr>
-                            <tr v-for="(data,i) in getTag.paginationData" :key="i">
+                            <tr v-for="(data,i) in getPaginate.paginationData" :key="i">
                                 <td>{{data.id}}</td>
                                 <td>{{ data.name }} </td>
                                 <td>
@@ -113,11 +113,11 @@ export default {
         }
     },
     computed: {
-        getTag(){
+        getPaginate(){
             var start = (this.page-1)*this.limit
             var end = start+this.limit
-            this.paginateValue = this.$store.getters.tagPaginate("Tag",start,end).paginationValue;
-            return this.$store.getters.tagPaginate("Tag",start,end);
+            this.paginateValue = this.$store.getters.paginate("Tag",start,end).paginationValue;
+            return this.$store.getters.paginate("Tag",start,end);
         }
     },
     mounted() {

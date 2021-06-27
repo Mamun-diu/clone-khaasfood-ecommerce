@@ -14,7 +14,8 @@ class KhaasHeroController extends Controller
      */
     public function index()
     {
-        //
+        $hero = KhaasHero::orderBy('id','DESC')->get();
+        return response()->json($hero);
     }
 
     /**
@@ -35,19 +36,19 @@ class KhaasHeroController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->validate($request, [
             'image' => 'required',
         ]);
 
-
-        $hero = new KhaasHeroController();
+        $heros = new KhaasHero();
         if($request->image){
             $imageName = time().'_'. uniqid() .'.'.$request->image->getClientOriginalExtension();
             $request->image->move(public_path('/storage/admin'), $imageName);
-            $hero->image = 'storage/admin/' . $imageName;
+            $heros->image = 'storage/admin/' . $imageName;
         }
-        $hero->status = $request->status;
-        $hero->save();
+        $heros->status = $request->status;
+        $heros->save();
         return response()->json(200);
     }
 
@@ -68,9 +69,10 @@ class KhaasHeroController extends Controller
      * @param  \App\Models\KhaasHero  $khaasHero
      * @return \Illuminate\Http\Response
      */
-    public function edit(KhaasHero $khaasHero)
+    public function edit($id)
     {
-        //
+        $hero = KhaasHero::find($id);
+        return response()->json($hero);
     }
 
     /**
@@ -80,9 +82,24 @@ class KhaasHeroController extends Controller
      * @param  \App\Models\KhaasHero  $khaasHero
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, KhaasHero $khaasHero)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'image' => 'sometimes',
+        ]);
+
+
+        $heros = KhaasHero::find($id);
+        // return response()->json($request->all());
+        if($request->image){
+            unlink($heros->image);
+            $imageName = time().'_'. uniqid() .'.'.$request->image->getClientOriginalExtension();
+            $request->image->move(public_path('/storage/admin'), $imageName);
+            $heros->image = 'storage/admin/' . $imageName;
+        }
+        $heros->status = $request->status;
+        $heros->save();
+        return response()->json(200);
     }
 
     /**
@@ -91,8 +108,11 @@ class KhaasHeroController extends Controller
      * @param  \App\Models\KhaasHero  $khaasHero
      * @return \Illuminate\Http\Response
      */
-    public function destroy(KhaasHero $khaasHero)
+    public function destroy($id)
     {
-        //
+        $hero = KhaasHero::find($id);
+        unlink($hero->image);
+        $hero->delete();
+        return response()->json(200);
     }
 }
