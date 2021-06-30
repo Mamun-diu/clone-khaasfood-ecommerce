@@ -194,17 +194,17 @@ export default {
             const response = await this.form.post('/api/product')
             if(response){
                 toastr.success('Product inserted succssfully.')
-                this.form.mainId = '';
-                this.form.subId = '';
-                this.form.tagId = '';
+                // this.form.mainId = '';
+                // this.form.subId = '';
+                // this.form.tagId = '';
                 this.form.title = null;
                 this.form.price = null;
                 this.form.quantity = null;
-                this.form.discount = null;
+                // this.form.discount = null;
                 this.form.status = 'publish';
                 this.form.image1 = '';
                 this.form.image2 = '';
-                this.form.description = '<p>Your data will be here...</p>';
+                this.form.description = '';
             }
         },
         imageUpload1(e) {

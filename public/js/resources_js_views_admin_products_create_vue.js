@@ -107,18 +107,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
 
                 if (response) {
-                  toastr.success('Product inserted succssfully.');
-                  _this3.form.mainId = '';
-                  _this3.form.subId = '';
-                  _this3.form.tagId = '';
+                  toastr.success('Product inserted succssfully.'); // this.form.mainId = '';
+                  // this.form.subId = '';
+                  // this.form.tagId = '';
+
                   _this3.form.title = null;
                   _this3.form.price = null;
-                  _this3.form.quantity = null;
-                  _this3.form.discount = null;
+                  _this3.form.quantity = null; // this.form.discount = null;
+
                   _this3.form.status = 'publish';
                   _this3.form.image1 = '';
                   _this3.form.image2 = '';
-                  _this3.form.description = '<p>Your data will be here...</p>';
+                  _this3.form.description = '';
                 }
 
               case 4:
