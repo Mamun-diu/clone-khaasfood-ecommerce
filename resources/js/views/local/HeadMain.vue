@@ -3,21 +3,42 @@
         <div class="row large-screen">
             <div class="col-3">
                 <div class="w-95">
-                    <img src="assets/image/khaasfood.png" alt="logo">
-                    <div class="main-menu d-flex">
+                    <img src="/assets/image/khaasfood.png" alt="logo">
+                    <div @mouseenter="mainLoad" class="main-menu d-flex">
                         <i class="fas fa-bars"></i>
                         <h6>BROWSE CATEGORIES</h6>
                         <i class="fas fa-angle-down"></i>
+                        <div class="menu-items">
+                            <ul v-if="menu" @mouseleave="mainHover = !mainHover" class="list-group list-group-flush menu-item">
+                                <!-- <li class="list-group-item d-flex align-items-center"><router-link class="active" to="/">HOME</router-link><i class="fas fa-angle-right mr-3 text-muted"></i></li>
+                                <li class="list-group-item d-flex align-items-center"><a href="">PRODUCT</a><i class="fas fa-angle-right mr-3 text-muted"></i></li>
+                                <li class="list-group-item d-flex align-items-center"><a href="">STORE</a><i class="fas fa-angle-right mr-3 text-muted"></i></li>
+                                <li class="list-group-item d-flex align-items-center"><a href="">CONTACT US</a><i class="fas fa-angle-right mr-3 text-muted"></i></li>
+                                <li class="list-group-item d-flex align-items-center"><router-link to="/home/track-order">TRACK ORDER</router-link><i class="fas fa-angle-right mr-3 text-muted"></i></li>
+                                <li class="list-group-item d-flex align-items-center"><a href="">GIFT CARD</a><i class="fas fa-angle-right mr-3 text-muted"></i></li>
+                                <li class="list-group-item d-flex align-items-center"><a @click.prevent="rightSides" href="">LOGIN / REGISTER</a><i class="fas fa-angle-right mr-3 text-muted"></i></li> -->
+                                <li @mouseenter="hoverMain(data.id)"   v-for="(data,index) in getMain" :key="index" class="list-group-item d-flex align-items-center"><a href="#"> {{ data.name }} </a><i class="fas fa-angle-right mr-3 text-muted"></i></li>
+                                <div v-if="mainHover" class="sub-menu-wrapper ">
+                                    <div class="row">
+                                        <div v-for="(data,index) in subProduct" :key="index" class="sub-menu col-5">
+                                            <h4>{{ data.sub }}</h4>
+                                            <a v-for="(product,index) in data.product" :key="index" :href="product.id">{{ product.title }} </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-6">
                 <ul class="nav mt-4">
-                    <li><a class="active" href="#">HOME</a></li>
-                    <li><a href="#">PRODUCTS</a></li>
-                    <li><a href="#">STORES</a></li>
-                    <li><a href="#">CONTACT US</a></li>
-                    <li><a href="#">TRACK ORDER</a></li>
+                    <li><router-link class="" to="/home">HOME</router-link></li>
+                    <li><router-link to="/home/product">PRODUCTS</router-link></li>
+                    <li><router-link to="/home/store">STORES</router-link></li>
+                    <li><router-link to="/home/contact-us">CONTACT US</router-link></li>
+                    <li><router-link to="/home/track-order">TRACK ORDER</router-link></li>
                     <li><a href="#">GIFT CARD</a></li>
                 </ul>
                 <form action="">
@@ -66,11 +87,11 @@
                         <li @click="menu=false" class="list-group-item w-50 text-center categories" :class="!menu?'actives':''">CATEGORIES</li>
                     </ul>
                     <ul v-if="menu" class="list-group list-group-flush menu-item">
-                        <li class="list-group-item"><a href="">HOME</a></li>
+                        <li class="list-group-item"><router-link class="active" to="/">HOME</router-link></li>
                         <li class="list-group-item"><a href="">PRODUCT</a></li>
                         <li class="list-group-item"><a href="">STORE</a></li>
                         <li class="list-group-item"><a href="">CONTACT US</a></li>
-                        <li class="list-group-item"><a href="">TRACK ORDER</a></li>
+                        <li class="list-group-item"><router-link to="/home/track-order">TRACK ORDER</router-link></li>
                         <li class="list-group-item"><a href="">GIFT CARD</a></li>
                         <li class="list-group-item"><a @click.prevent="rightSides" href="">LOGIN / REGISTER</a></li>
                     </ul>
@@ -151,6 +172,10 @@ export default {
                 color : "#fff",
             },
             i:0,
+            getMain: [],
+            mainHover: false,
+            subProduct: [],
+            hoverMainId:null,
         }
     },
     methods:{
@@ -193,9 +218,43 @@ export default {
             }
 
 
+        },
+
+        setAll(){
+            this.$store.dispatch('getAll');
+        },
+
+        hoverMain(mainId){
+            this.mainHover = true;
+            // console.log(mainId);
+            this.hoverMainId = mainId;
+            this.getSubProduct;
+
+        },
+        mainLoad(){
+            this.getMains;
+        },
+
+    },
+    computed: {
+        // getProduct(){
+        //     return this.$store.state.allProduct;
+        // }
+        getMains(){
+            this.getMain = this.$store.getters.mainCategory
+
+        },
+        getSubProduct(){
+            this.subProduct = this.$store.getters.subProduct(this.hoverMainId);
+
         }
 
-    }
+    },
+    mounted() {
+        this.setAll();
+        // this.getProduct();
+        this.getMains;
+    },
 }
 </script>
 
@@ -208,6 +267,7 @@ export default {
         padding: 0 14px;
         margin-bottom: -1px;
         position : relative;
+        transition : all 0.3s ease;
 
     }
     .main-menu h6{
@@ -228,7 +288,62 @@ export default {
         position : absolute;
         top : 16px;
         right : 16px;
+        transition : all 0.3s ease;
     }
+    .main-menu .menu-items{
+        z-index: 4;
+        position: absolute;
+        top: 50px;
+        left: 0;
+        width: 100%;
+        display : none;
+        transition : all 0.3s ease;
+    }
+    .main-menu:hover .menu-items{
+        display : block;
+    }
+    .main-menu:hover .fa-angle-down{
+        transform: rotate(-180deg);
+    }
+    .main-menu li{
+        /* position : relative; */
+    }
+    .main-menu li:hover .sub-menu-wrapper{
+        display: block;
+    }
+
+
+    .sub-menu-wrapper{
+        width: 750px !important;
+        z-index: 5 !important;
+        padding: 25px 0;
+        position: absolute !important;
+        background: white;
+        margin-left: 100%;
+        display: block;
+        border-left: 1px solid #ddd;
+        min-height: 420px;
+    }
+    .sub-menu{
+        margin-left : 40px;
+    }
+    .sub-menu h4{
+        margin-bottom : 20px;
+    }
+    .sub-menu a{
+        display: block!important;
+        padding: 0 !important;
+        margin: 10px 0;
+        color : #333;
+        transition : 0.1s ease;
+    }
+    .sub-menu a:hover{
+        color : #83B735;
+    }
+
+
+
+
     .w-95{
         width : 95% !important;
     }
@@ -430,7 +545,7 @@ export default {
         top : 0;
         width : 100vw;
         height : 100vh;
-        z-index : 1;
+        z-index : 2;
     }
     .left-nav{
         float : left;
@@ -538,7 +653,7 @@ export default {
 
     .rightSide{
         position : fixed;
-        z-index: 2;
+        z-index: 3;
         left  : 0;
         top : 0;
         width : 100vw;

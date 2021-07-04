@@ -3,8 +3,8 @@
         <div class="">
             <ul class="flex justify-end px-lg-2 px-xl-5">
                 <li class="mr-4"><a href="">GIFT CARD</a></li>
-                <li class="mr-4"><a href="">HOW TO ORDER</a></li>
-                <li class="mr-4"><a href="">FAQS</a></li>
+                <li class="mr-4"><router-link to="/home/how-to-order">HOW TO ORDER</router-link></li>
+                <li class="mr-4"><router-link to="/home/faqs">FAQS</router-link></li>
             </ul>
         </div>
     </div>

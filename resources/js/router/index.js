@@ -123,11 +123,41 @@ const routes = [
 
 
 
-  
+
   {
-    path: "/",
+    path: "/home/",
     name: "Home",
     component: () => import("../views/local/Home.vue"),
+  },
+  {
+      path: "/home/faqs",
+      name: "Faq",
+      component: () => import("../views/local/Faq.vue")
+  },
+  {
+      path: "/home/track-order",
+      name: "Track",
+      component: () => import("../views/local/TrackOrder.vue")
+  },
+  {
+      path: "/home/how-to-order",
+      name: "HowToOrder",
+      component: () => import("../views/local/HowToOrder.vue")
+  },
+  {
+      path: "/home/contact-us",
+      name: "ContactUs",
+      component: () => import("../views/local/ContactUs.vue")
+  },
+  {
+      path: "/home/store",
+      name: "Store",
+      component: () => import("../views/local/Store.vue")
+  },
+  {
+      path: "/home/product",
+      name: "Product",
+      component: () => import("../views/local/Product.vue")
   },
 
 

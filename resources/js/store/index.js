@@ -10,10 +10,84 @@ export default createStore({
     allHero : [],
     allBlog : [],
     allProduct : [],
+    all: {},
 
 
   },
   getters: {
+    newProduct(state){
+        var obj = [];
+        state.all.product.forEach(function(p){
+            if(p.tag.name=="NEW"){
+                obj.push(p)
+            }
+        })
+        return obj;
+    },
+    mainWithCount(state){
+        let obj =[];
+        let main = [];
+        let count = 0;
+        state.all.product.forEach(function(v){
+            if(!main.includes(v.main_category_id)){
+                main.push(v.main_category_id);
+            }
+        });
+        main.forEach(function(m){
+            state.all.product.forEach(function(p){
+                if(m == p.main_category_id){
+                    ++count;
+
+                }
+            })
+
+            for (const p of state.all.product) {
+                if(m == p.main_category_id){
+                    obj.push({main:p.main,count:count})
+                    count = 0;
+                    break;
+                }
+            }
+        })
+        return obj;
+    },
+    mainCategory(state){
+        return state.all.main;
+    },
+    subProduct:(state)=>(id)=>{
+        let val = [];
+        let sub = [];
+        let obj = []
+
+        state.all.product.forEach(function (v) {
+            if(v.main_category_id==id){
+                val.push(v);
+            }
+        });
+        val.forEach(function(v){
+            if(!sub.includes(v.sub_category_id)){
+                sub.push(v.sub_category_id);
+            }
+        });
+        let subCat = "";
+        let product = [];
+        sub.forEach(function(v){
+            val.forEach(function(w){
+                if(w.sub_category_id==v){
+                    subCat = w.sub.name;
+                    product.push({id:w.id,title:w.title})
+                }
+
+            })
+            obj.push({sub:subCat,product:product})
+            product = [];
+        })
+        // let unique = [...new Set(val.sub_category_id)];
+        // console.log(val);
+        return obj;
+
+
+    },
     paginate:(state)=>(table, start, limit)=>{
         if(table=="Tag"){
             var pagniateNumber = state.allTag.slice(start,limit);
@@ -39,7 +113,7 @@ export default createStore({
             paginationData: pagniateNumber,
             paginationValue: paginateData
         }
-    }
+    },
   },
   mutations: {
     getAllTag(state,payload){
@@ -59,6 +133,9 @@ export default createStore({
     },
     getAllProduct(state,payload){
         state.allProduct = payload;
+    },
+    getAll(state,payload){
+        state.all = payload;
     },
   },
   actions: {
@@ -110,6 +187,12 @@ export default createStore({
         axios.get('/api/product')
         .then(res => {
             context.commit('getAllProduct',res.data.product);
+        })
+    },
+    getAll(context){
+        axios.get('/frontend/getAll')
+        .then(res => {
+            context.commit('getAll',res.data);
         })
     },
 

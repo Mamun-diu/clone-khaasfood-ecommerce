@@ -42,10 +42,14 @@ toastr.options = {
 var app = createApp({});
 import CKEditor from '@ckeditor/ckeditor5-vue';
 
+
+
+
 // import CkEditor from '@ckeditor/ckeditor5-vue';
 app.component('top-header', require('./views/local/HeadTop.vue').default);
 app.component('main-header', require('./views/local/HeadMain.vue').default);
 app.component('big-footer', require('./views/local/Footer.vue').default);
+app.component('load-data', require('./views/local/template/Load.vue').default);
 app.use(store).use(router).use(CKEditor).use(toastr).use(VueAxios, axios).mount("#app");
 app.use(router).use(VueAxios, axios).mount("#home");
 // app.mount('#app');

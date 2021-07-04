@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KhaasBlog;
+use App\Models\KhaasHero;
 use App\Models\KhaasImage;
 use App\Models\KhaasMainCategory;
 use App\Models\KhaasProduct;
@@ -33,6 +35,22 @@ class KhaasProductController extends Controller
     public function getSubCategory($id){
         $sub = KhaasSubCategory::orderBy('id','DESC')->where('main_category_id',$id)->get();
         return response()->json($sub);
+    }
+    public function getAll(){
+        $main = KhaasMainCategory::orderBy('id','DESC')->get();
+        $sub = KhaasSubCategory::orderBy('id','DESC')->get();
+        $tag = KhaasTag::orderBy('id','DESC')->get();
+        $product = KhaasProduct::orderBy('id','DESC')->with('images','main','sub','tag')->get();
+        $hero = KhaasHero::all();
+        $blog = KhaasBlog::all();
+        return response()->json([
+            'main' => $main,
+            'sub' => $sub,
+            'tag' => $tag,
+            'product' => $product,
+            'hero' => $hero,
+            'blog' => $blog,
+        ]);
     }
 
     /**

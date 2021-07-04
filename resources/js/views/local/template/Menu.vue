@@ -3,82 +3,36 @@
         <h3 class="text-center">PRODUCT CATEGORIES</h3>
 
         <div class="main-menu row justify-content-center">
-            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+            <div v-for="(data,index) in main" :key="index" class="col-6 col-sm-4 col-md-3 col-lg-2">
                 <a href="">
-                    <img width="130" src="/storage/admin/1624716919_60d73677a6b40.png" alt="">
-                    <h4>DAIRY</h4>
-                    <p>5 products</p>
+                    <img width="130" :src="'/'+data.main.image" alt="">
+                    <h4>{{data.main.name}}</h4>
+                    <p>{{ data.count }} products</p>
                 </a>
 
             </div>
-            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                <a href="">
-                    <img width="130" src="storage/admin/1624716987_60d736bbe3798.png" alt="">
-                    <h4>DRY FISH</h4>
-                    <p>23 products</p>
-                </a>
-            </div>
 
-            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                <a href="">
-                    <img width="130" src="/storage/admin/1624717506_60d738c229d04.png" alt="">
-                    <h4>FOOD FOR HEALTH</h4>
-                    <p>11 products</p>
-                </a>
-            </div>
-            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                <a href="">
-                    <img width="130" src="/storage/admin/1624716919_60d73677a6b40.png" alt="">
-                    <h4>DAIRY</h4>
-                    <p>5 products</p>
-                </a>
-
-            </div>
-            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                <a href="">
-                    <img width="130" src="storage/admin/1624716987_60d736bbe3798.png" alt="">
-                    <h4>DRY FISH</h4>
-                    <p>23 products</p>
-                </a>
-            </div>
-
-            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                <a href="">
-                    <img width="130" src="/storage/admin/1624717506_60d738c229d04.png" alt="">
-                    <h4>FOOD FOR HEALTH</h4>
-                    <p>11 products</p>
-                </a>
-            </div>
-            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                <a href="">
-                    <img width="130" src="/storage/admin/1624716919_60d73677a6b40.png" alt="">
-                    <h4>DAIRY</h4>
-                    <p>5 products</p>
-                </a>
-
-            </div>
-            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                <a href="">
-                    <img width="130" src="storage/admin/1624716987_60d736bbe3798.png" alt="">
-                    <h4>DRY FISH</h4>
-                    <p>23 products</p>
-                </a>
-            </div>
-
-            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                <a href="">
-                    <img width="130" src="/storage/admin/1624717506_60d738c229d04.png" alt="">
-                    <h4>FOOD FOR HEALTH</h4>
-                    <p>11 products</p>
-                </a>
-            </div>
         </div>
     </div>
 </template>
 
 <script>
 export default {
+    data(){
+        return{
+            main:[],
+        }
+    },
+    computed: {
+        getMain(){
+            this.main = this.$store.getters.mainWithCount;
 
+        },
+    },
+    mounted() {
+        this.getMain;
+
+    },
 }
 </script>
 

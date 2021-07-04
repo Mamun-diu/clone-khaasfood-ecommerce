@@ -22,11 +22,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return redirect('/home');
 });
-Route::get('/{catchall?}', function () {
-    return view('home');
-})->where('catchall', '(.*)');
+Route::prefix('home')->group(function () {
+    Route::get('/{catchall?}', function () {
+        return view('home');
+    })->where('catchall', '(.*)');
+    // Route::resource('product', KhaasProductController::class);
+
+});
+Route::get('/frontend/getAll',[KhaasProductController::class, 'getAll']);
 
 // Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 //     return view('dashboard');
