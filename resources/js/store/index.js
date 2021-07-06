@@ -11,10 +11,27 @@ export default createStore({
     allBlog : [],
     allProduct : [],
     all: {},
+    cart:[],
 
 
   },
   getters: {
+    getCartItem(state){
+        let cart = [];
+        let sum = 0;
+        for (const data of state.cart) {
+            state.all.product.forEach(function(p){
+                if(data.id == p.id){
+                    sum += data.quantity*p.price
+                    cart.push({quantity: data.quantity, product: p, taka:sum})
+                }
+            })
+        }
+        return cart;
+    },
+    cartItem:(state)=>(id,quantity=1)=>{
+        state.cart.push({id:id,quantity:quantity});
+    },
     newProduct(state){
         var obj = [];
         state.all.product.forEach(function(p){

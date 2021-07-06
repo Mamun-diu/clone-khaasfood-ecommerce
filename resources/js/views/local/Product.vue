@@ -6,141 +6,138 @@
                     <h2 class="my-3  p-0">Products</h2>
                 </div>
                 <ul class="d-flex justify-content-center flex-wrap">
-                    <li>
+                    <li v-for="(data,index) in category" :key="index">
                         <a href="">
-                            <h6>GROCERY</h6>
-                            <p>32 product</p>
+                            <h6>{{ data.main[0].name }} </h6>
+                            <p>{{ data.main[0].count }} product</p>
                         </a>
                         <ul>
-                            <li>
+                            <li v-for="(sub,index) in data.sub" :key="index">
                                 <a href="">
-                                    <h6>GROCERY</h6>
-                                    <p>32 product</p>
+                                    <h6>{{ sub.name }} </h6>
+                                    <p>{{ sub.count }} product</p>
                                 </a>
-                                <a href="">
-                                    <h6>GROCERY</h6>
-                                    <p>32 product</p>
-                                </a>
+
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="">
-                            <h6>GROCERY</h6>
-                            <p>32 product</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <h6>GROCERY</h6>
-                            <p>32 product</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <h6>GROCERY</h6>
-                            <p>32 product</p>
-                        </a>
-                        <ul>
-                            <li>
-                                <a href="">
-                                    <h6>GROCERY</h6>
-                                    <p>32 product</p>
-                                </a>
-                                <a href="">
-                                    <h6>GROCERY</h6>
-                                    <p>32 product</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="">
-                            <h6>GROCERY</h6>
-                            <p>32 product</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <h6>GROCERY</h6>
-                            <p>32 product</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <h6>GROCERY</h6>
-                            <p>32 product</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <h6>GROCERY</h6>
-                            <p>32 product</p>
-                        </a>
-                    </li>
+
                 </ul>
             </div>
 
         </div>
         <div class="d-flex flex-wrap px-2 px-lg-5">
-            <div class="new-carousel">
-                <a href="">
-                    <img src="/storage/admin/1624721868_60d749cc4d14e.png" class="" alt="...">
-                    <p>Mixed Flower (মিশ্র ফুলের মধু) Honey</p>
-                    <span>290</span>
-                </a>
-                <button>ADD TO CART</button>
+            <div v-for="(data,index) in product" :key="index" class="new-carousel mb-4">
+                <router-link :to="'/home/product/'+data.slug" >
+                    <img :src="'/'+data.images[0].image" class="" alt="...">
+                    <p>{{ title(data.title) }} </p>
+                    <span>{{ data.price }} </span>
+                </router-link>
+                <button :disabled="data.tag.name=='SOLD OUT'" :class="data.tag.name=='SOLD OUT'?'text-danger':''" @click="addToCart(data.id)">ADD TO CART</button>
                 <i class="fas fa-search" data-toggle="tooltip" data-placement="left" title="Quick view"></i>
-                <span class="tag">NEW</span>
+                <span v-if="data.tag.name == 'NEW'" class="tag">NEW</span>
+                <span v-if="data.tag.name == 'SOLD OUT'" class="tag px-3 bg-danger" style="font-size : 8px">SOLD<br>OUT</span>
             </div>
-            <div class="new-carousel mt-3">
-                <a href="">
-                    <img src="/storage/admin/1624756359_60d7d08751da0.jpg" class="" alt="...">
-                    <p>Mixed Flower (মিশ্র ফুলের মধু) Honey</p>
-                    <span>290</span>
-                </a>
-                <button>ADD TO CART</button>
-                <i class="fas fa-search" data-toggle="tooltip" data-placement="left" title="Quick view"></i>
-                <span class="tag">NEW</span>
-            </div>
-            <div class="new-carousel mt-3">
-                <a href="">
-                    <img src="/storage/admin/1624756660_60d7d1b47be33.jpg" class="" alt="...">
-                    <p>Mixed Flower (মিশ্র ফুলের মধু) Honey</p>
-                    <span>290</span>
-                </a>
-                <button>ADD TO CART</button>
-                <i class="fas fa-search" data-toggle="tooltip" data-placement="left" title="Quick view"></i>
-                <span class="tag">NEW</span>
-            </div>
-            <div class="new-carousel mt-3">
-                <a href="">
-                    <img src="/storage/admin/1624756738_60d7d202759ca.jpg" class="" alt="...">
-                    <p>Mixed Flower (মিশ্র ফুলের মধু) Honey</p>
-                    <span>290</span>
-                </a>
-                <button>ADD TO CART</button>
-                <i class="fas fa-search" data-toggle="tooltip" data-placement="left" title="Quick view"></i>
-                <span class="tag">NEW</span>
-            </div>
-            <div class="new-carousel mt-3">
-                <a href="">
-                    <img src="/storage/admin/1624756738_60d7d202759ca.jpg" class="" alt="...">
-                    <p>Mixed Flower (মিশ্র ফুলের মধু) Honey</p>
-                    <span>290</span>
-                </a>
-                <button>ADD TO CART</button>
-                <i class="fas fa-search" data-toggle="tooltip" data-placement="left" title="Quick view"></i>
-                <span class="tag">NEW</span>
-            </div>
+
         </div>
     </div>
 
 </template>
 
 <script>
-export default {
 
+export default {
+    data(){
+        return{
+            category:[],
+            product:[],
+        }
+    },
+    methods:{
+        title(val){
+            return val.slice(0,25);
+        },
+        addToCart(id){
+            this.$store.getters.cartItem(id);
+        }
+    },
+    computed: {
+        getCategory(){
+            let obj = [];
+            let main = [];
+            let mainCount = 0;
+            let sub = [];
+            let subCount = 0;
+            let product = this.$store.state.all.product;
+            for (const data of product) {
+                if(!main.includes(data.main_category_id)){
+                    main.push(data.main_category_id);
+                }
+
+            }
+            main.forEach(function(m){
+                let mainCategory = [];
+                let subCategory = [];
+                let tempMain = "";
+                let tempSub = "";
+                product.forEach(function(p){
+                    if(m==p.main_category_id){
+                        mainCount++;
+                        tempMain = p.main.name;
+                        if(!sub.includes(p.sub_category_id)){
+                            sub.push(p.sub_category_id);
+                        }
+                    }
+                })
+                sub.forEach(function(s){
+                     product.forEach(function(p){
+                         if(s==p.sub_category_id){
+                             subCount++;
+                             tempSub = p.sub.name;
+                         }
+                     })
+                     subCategory.push({name:tempSub,count:subCount})
+                     subCount = 0;
+                     tempSub = "";
+                });
+                sub = []
+                mainCategory.push({name:tempMain,count:mainCount});
+                mainCount = 0;
+                obj.push({main:mainCategory,sub:subCategory});
+
+            })
+            this.category = obj;
+
+        },
+        getProduct(){
+            function shuffle(array) {
+                var currentIndex = array.length,  randomIndex;
+
+                // While there remain elements to shuffle...
+                while (0 !== currentIndex) {
+
+                    // Pick a remaining element...
+                    randomIndex = Math.floor(Math.random() * currentIndex);
+                    currentIndex--;
+
+                    // And swap it with the current element.
+                    [array[currentIndex], array[randomIndex]] = [
+                    array[randomIndex], array[currentIndex]];
+                }
+
+                return array;
+            }
+            let product = this.$store.state.all.product;
+            shuffle(product);
+            this.product = product;
+
+        }
+    },
+    mounted() {
+        this.getCategory;
+        this.getProduct;
+
+    },
 }
 </script>
 
@@ -196,9 +193,13 @@ export default {
         left: -25px;
         width: 210px;
     }
+    .top ul ul li{
+        margin-right: 0;
+    }
     .top ul ul li a{
         display: block;
-        margin-left : -65px;
+        /* margin-left : -65px; */
+        text-align: center;
     }
     .top ul li:hover ul{
         display: block;
@@ -251,6 +252,10 @@ export default {
         margin: 10px auto;
         border-radius: 20px;
         padding: 5px 13px;
+        transition : 0.2s;
+    }
+    .new-carousel button:hover{
+        background: #476903;
     }
     .new-carousel:hover i{
         right : 0px;

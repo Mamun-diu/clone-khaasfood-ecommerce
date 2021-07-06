@@ -10,13 +10,7 @@
                         <i class="fas fa-angle-down"></i>
                         <div class="menu-items">
                             <ul v-if="menu" @mouseleave="mainHover = !mainHover" class="list-group list-group-flush menu-item">
-                                <!-- <li class="list-group-item d-flex align-items-center"><router-link class="active" to="/">HOME</router-link><i class="fas fa-angle-right mr-3 text-muted"></i></li>
-                                <li class="list-group-item d-flex align-items-center"><a href="">PRODUCT</a><i class="fas fa-angle-right mr-3 text-muted"></i></li>
-                                <li class="list-group-item d-flex align-items-center"><a href="">STORE</a><i class="fas fa-angle-right mr-3 text-muted"></i></li>
-                                <li class="list-group-item d-flex align-items-center"><a href="">CONTACT US</a><i class="fas fa-angle-right mr-3 text-muted"></i></li>
-                                <li class="list-group-item d-flex align-items-center"><router-link to="/home/track-order">TRACK ORDER</router-link><i class="fas fa-angle-right mr-3 text-muted"></i></li>
-                                <li class="list-group-item d-flex align-items-center"><a href="">GIFT CARD</a><i class="fas fa-angle-right mr-3 text-muted"></i></li>
-                                <li class="list-group-item d-flex align-items-center"><a @click.prevent="rightSides" href="">LOGIN / REGISTER</a><i class="fas fa-angle-right mr-3 text-muted"></i></li> -->
+
                                 <li @mouseenter="hoverMain(data.id)"   v-for="(data,index) in getMain" :key="index" class="list-group-item d-flex align-items-center"><a href="#"> {{ data.name }} </a><i class="fas fa-angle-right mr-3 text-muted"></i></li>
                                 <div v-if="mainHover" class="sub-menu-wrapper ">
                                     <div class="row">
@@ -57,9 +51,9 @@
                     <ul class="login">
                         <li><a @click.prevent="rightSides" href="#">LOGIN / REGISTER</a></li>
                     </ul>
-                    <i class="fas fa-shopping-cart"><span>0</span></i>
+                    <router-link to="/home/cart"><i class="fas fa-shopping-cart"><span>{{ getCartItem.length }} </span></i></router-link>
                     <span class="takaIcon">&#2547;</span>
-                    <span class="taka">2045</span>
+                    <span v-if="getCartItem.length>0" class="taka">{{ getCartItem[getCartItem.length-1].taka }} </span>
                 </div>
             </div>
         </div>
@@ -157,6 +151,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
     data(){
         return{
@@ -247,7 +242,12 @@ export default {
         getSubProduct(){
             this.subProduct = this.$store.getters.subProduct(this.hoverMainId);
 
-        }
+        },
+        ...mapGetters([
+            'getCartItem',
+            // ...
+        ]),
+
 
     },
     mounted() {
