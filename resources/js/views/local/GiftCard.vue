@@ -3,35 +3,33 @@
         <div class="row container">
             <div class="col-md-6">
                 <div class="large-image d-flex " >
-                    <span class="bg-success text-light px-2 py-3 text-center" v-if="getProduct.tag.name=='NEW'">NEW</span>
-                    <span class="bg-danger text-light p-3  text-center" v-if="getProduct.tag.name=='SOLD OUT'" style="font-size : 9px">SOLD<br>OUT</span>
-                    <!-- <span>{{ getProduct.tag.name }} </span> -->
-                    <div v-for="(data,index) of getProduct.images" :key="index">
-                        <img class="w-100" v-if="index==0"  :src="'/'+data.image" alt="">
+
+                    <div >
+                        <img class="w-100" src="/assets/image/gift-card.png" alt="">
                     </div>
 
 
                 </div>
                 <div class="small-image d-flex" >
-                    <img v-for="(product,index) in getProduct.images" :key="index" class="w-25"   :src="'/'+product.image" alt="">
+                    <img class="w-25"   src="/assets/image/gift-card.png" alt="">
+                    <img class="w-25"   src="/assets/image/gift-card.png" alt="">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="ml-3">
-                    <h1 class="mt-5">{{ getProduct.title }} </h1>
-                    <h3><span style="margin-right : 7px; font-size : 40px;">&#2547;</span>{{ getProduct.price }} </h3>
-                    <p><span style="font-weight : bold; color: #666;">Quantity:</span> {{ getProduct.quantity }} </p>
+                    <h1 class="mt-5">GIFT CARD </h1>
+                    <h3><span style="margin-right : 7px; font-size : 40px;">&#2547;</span>300 </h3>
                     <div class="quantity d-inline-block">
                         <span @click="quantityDecrease" class="low">-</span>
                         <input v-model="quantity" @keydown="quantityChange"  type="number" name="" id="" min="1" max="10">
                         <span @click="quantityIncrease" class="high">+</span>
                     </div>
-                    <button :disabled="getProduct.tag.name=='SOLD OUT'" :class="getProduct.tag.name=='SOLD OUT'?'text-danger':''" @click="addToCart(getProduct.id,quantity)" class="btn btn-primary mt-n1 ml-2">ADD TO CART</button>
+                    <button disabled  class="btn btn-primary text-danger mt-n1 ml-2">ADD TO CART</button>
                     <br><hr>
 
-                    <p><span style="font-weight : bold; color: #666;">SKU:</span> {{ getProduct.slug }} </p>
-                    <p><span style="font-weight : bold; color: #666;">Category:</span> {{ getProduct.main.name }}, {{ getProduct.sub.name }} </p>
-                    <p v-if="getProduct.tag.name != 'UNKNOWN'"><span style="font-weight : bold; color: #666;">Tag:</span> {{ getProduct.tag.name }} </p>
+                    <p><span style="font-weight : bold; color: #666;">SKU:</span> N/A </p>
+                    <p><span style="font-weight : bold; color: #666;">Category:</span> Gift </p>
+                    <p ><span style="font-weight : bold; color: #666;">Tag:</span> <span class="text-danger">SOLD OUT</span> </p>
                     <p><span style="font-weight : bold; color: #666;">Share:</span>
                         <i class="ml-2 fab fa-facebook-f"></i>
                         <i class="ml-2 fab fa-twitter"></i>
@@ -44,13 +42,7 @@
 
             </div>
         </div>
-        <br><br><hr>
-        <div class="row">
-            <div class="col">
-                <h1 class="text-center my-3">Description</h1>
-                <div v-html="getProduct.description"></div>
-            </div>
-        </div>
+        <br><br>
     </div>
 </template>
 
@@ -84,9 +76,7 @@ export default {
             }, 10);
 
         },
-        addToCart(id,quantity){
-            this.$store.getters.cartItem(id,quantity);
-        },
+
         scrollTop(){
             document.documentElement.scrollTop=0;
 
@@ -94,18 +84,10 @@ export default {
 
     },
     computed:{
-        getProduct(){
-            let slug = this.$route.params.slug
-            let product = this.$store.state.all.product;
-            for (const p of product) {
-                if(slug==p.slug){
-                    return p;
-                }
-            }
-        }
+
     },
     mounted() {
-        this.getProduct;
+
         this.scrollTop();
     },
 }

@@ -16,7 +16,7 @@
                                     <div class="row">
                                         <div v-for="(data,index) in subProduct" :key="index" class="sub-menu col-5">
                                             <h4>{{ data.sub }}</h4>
-                                            <a v-for="(product,index) in data.product" :key="index" :href="product.id">{{ product.title }} </a>
+                                            <router-link @click="mainHover = !mainHover" :to="'/home/product/'+product.slug" v-for="(product,index) in data.product" :key="index" :href="product.id">{{ product.title }} </router-link>
                                         </div>
                                     </div>
 
@@ -33,11 +33,34 @@
                     <li><router-link to="/home/store">STORES</router-link></li>
                     <li><router-link to="/home/contact-us">CONTACT US</router-link></li>
                     <li><router-link to="/home/track-order">TRACK ORDER</router-link></li>
-                    <li><a href="#">GIFT CARD</a></li>
+                    <li><router-link to="/home/gift">GIFT CARD</router-link></li>
                 </ul>
-                <form action="">
-                    <input class="searchBox" type="text" placeholder="Search for products">
-                    <i class="fas fa-search"></i>
+                <form @submit.prevent="letSearch">
+                    <input v-model="pSearch" @keydown="search" class="searchBox" type="text" placeholder="Search for products">
+                    <i @click="letSearch" class="fas fa-search"></i>
+                    <div v-if="pSearch!=''" class="result">
+                        <div class="row">
+                            <div v-for="(data,index) in resultFound" :key="index" class="col-6 my-3 " :class="index%2==0?'border-r':''">
+                                <router-link @click="pSearch=''" :to="'/home/product/'+data.slug">
+                                <div  class="row">
+                                    <div class="col-3">
+                                        <img :src="'/'+data.images[0].image" alt="">
+                                    </div>
+                                    <div class="col-9">
+                                        <p class="text-dark m-0 p-0 mt-2">{{ data.title }} </p>
+                                        <span class="badge badge-success">{{ data.price }} tk</span>
+                                    </div>
+                                </div>
+                                </router-link>
+
+                            </div>
+                            <div class="col-12">
+                                <h2 class="text-center text-danger" v-if="resultFound.length==0">No data found </h2>
+                            </div>
+
+
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="col-3">
@@ -63,17 +86,19 @@
                     <i @click="leftSides" class="fas fa-bars"></i>
                 </div>
                 <div class="d-flex">
-                    <i class="fas fa-search "></i>
-                    <i class="fas fa-shopping-cart"><span>0</span></i>
+                    <i @click="leftSides" class="fas fa-search "></i>
+                    <router-link to="/home/cart"><i class="fas fa-shopping-cart"><span>{{ getCartItem.length }} </span></i></router-link>
+                    <!-- <span class="takaIcon">&#2547;</span>
+                    <span v-if="getCartItem.length>0" class="taka">{{ getCartItem[getCartItem.length-1].taka }} </span> -->
                 </div>
             </div>
         </div>
         <div v-if="leftSide" class="leftSide">
             <aside>
                 <div class="left-nav">
-                    <form action="">
-                        <input class="searchBox" type="text" placeholder="Search for products">
-                        <i class="fas fa-search"></i>
+                    <form @submit.prevent="letSearch">
+                        <input v-model="pSearch" class="searchBox" type="text" placeholder="Search for products">
+                        <i @click="letSearch" class="fas fa-search"></i>
                     </form>
 
                     <ul class="list-group list-group-horizontal">
@@ -81,22 +106,18 @@
                         <li @click="menu=false" class="list-group-item w-50 text-center categories" :class="!menu?'actives':''">CATEGORIES</li>
                     </ul>
                     <ul v-if="menu" class="list-group list-group-flush menu-item">
-                        <li class="list-group-item"><router-link class="active" to="/">HOME</router-link></li>
-                        <li class="list-group-item"><a href="">PRODUCT</a></li>
-                        <li class="list-group-item"><a href="">STORE</a></li>
-                        <li class="list-group-item"><a href="">CONTACT US</a></li>
-                        <li class="list-group-item"><router-link to="/home/track-order">TRACK ORDER</router-link></li>
-                        <li class="list-group-item"><a href="">GIFT CARD</a></li>
-                        <li class="list-group-item"><a @click.prevent="rightSides" href="">LOGIN / REGISTER</a></li>
+                        <li @click="leftSideClose" class="list-group-item"><router-link class="active" to="/home">HOME</router-link></li>
+                        <li @click="leftSideClose" class="list-group-item"><router-link to="/home/product">PRODUCT</router-link></li>
+                        <li @click="leftSideClose" class="list-group-item"><router-link to="/home/store">STORE</router-link></li>
+                        <li @click="leftSideClose" class="list-group-item"><router-link to="/home/contact-us">CONTACT US</router-link></li>
+                        <li @click="leftSideClose" class="list-group-item"><router-link to="/home/track-order">TRACK ORDER</router-link></li>
+                        <li @click="leftSideClose" class="list-group-item"><router-link to="/home/gift">GIFT CARD</router-link></li>
+                        <li @click="leftSideClose" class="list-group-item"><a @click.prevent="rightSides" href="">LOGIN / REGISTER</a></li>
                     </ul>
                     <ul v-if="!menu" class="list-group list-group-flush " id="category-item">
 
-                        <div v-for="i in 5" :key="i">
-                            <li  class="list-group-item d-flex justify-content-between main-menus"><span><a href="">HOME</a></span><a :id='`name${i}`' @click.prevent="test($event)"><i class="fas fa-angle-down"></i></a></li>
-                            <ul  class="list-group list-group-flush sub-menus">
-                                <li class="list-group-item"> <a href="">first-{{ i }}</a> </li>
-                                <li class="list-group-item"> <a href="">second-{{ i }}</a> </li>
-                            </ul>
+                        <div v-for="(data,i) in getMain" :key="i">
+                            <li @click="leftSideClose"  class="list-group-item d-flex justify-content-between main-menus"><span><router-link :to="'/home/main/'+data.id">{{ data.name }} </router-link></span><router-link :to="'/home/main/'+data.id" :id='`name${i}`' ><i class="fas fa-angle-down"></i></router-link></li>
                         </div>
 
 
@@ -171,12 +192,15 @@ export default {
             mainHover: false,
             subProduct: [],
             hoverMainId:null,
+            pSearch : '',
+            resultFound : [],
         }
     },
     methods:{
         leftSides(){
             this.leftSide = !this.leftSide;
             document.querySelector('body').style.overflow = "hidden";
+            this.getMains;
 
         },
         rightSides(){
@@ -192,28 +216,28 @@ export default {
             this.leftSide = !this.leftSide;
             document.querySelector('body').style.overflow = "auto";
         },
-        test(event){
-            let targetid = event.currentTarget.id
-            let parent = document.getElementById(targetid)
-            if(parent.classList.contains('catActive')){
-                parent.classList.remove('catActive')
-                parent.closest('li').nextElementSibling.style.display = "none "
-                parent.closest('li').style.background = "#fff"
-                parent.closest('li').style.color = "#333"
-            }else{
-                parent.classList.add('catActive')
-                parent.closest('li').nextElementSibling.style.display = "block "
-                parent.closest('li').style.background = "#F5F5F5"
-                parent.closest('li').style.color = "#83B735"
-            }
-            if(parent.querySelector('i').classList.contains('catSpanActive')){
-                parent.querySelector('i').classList.remove('catSpanActive')
-            }else{
-                parent.querySelector('i').classList.add('catSpanActive')
-            }
+        // test(event){
+        //     let targetid = event.currentTarget.id
+        //     let parent = document.getElementById(targetid)
+        //     if(parent.classList.contains('catActive')){
+        //         parent.classList.remove('catActive')
+        //         parent.closest('li').nextElementSibling.style.display = "none "
+        //         parent.closest('li').style.background = "#fff"
+        //         parent.closest('li').style.color = "#333"
+        //     }else{
+        //         parent.classList.add('catActive')
+        //         parent.closest('li').nextElementSibling.style.display = "block "
+        //         parent.closest('li').style.background = "#F5F5F5"
+        //         parent.closest('li').style.color = "#83B735"
+        //     }
+        //     if(parent.querySelector('i').classList.contains('catSpanActive')){
+        //         parent.querySelector('i').classList.remove('catSpanActive')
+        //     }else{
+        //         parent.querySelector('i').classList.add('catSpanActive')
+        //     }
 
 
-        },
+        // },
 
         setAll(){
             this.$store.dispatch('getAll');
@@ -229,6 +253,28 @@ export default {
         mainLoad(){
             this.getMains;
         },
+        search(){
+            setTimeout(() => {
+                let search = this.pSearch
+                search = search?search:'aereser';
+                axios.get('/frontend/search/'+search)
+                .then(res =>{
+                    this.resultFound = res.data;
+                })
+            }, 10);
+
+        },
+
+        letSearch(){
+            setTimeout(() => {
+                this.pSearch='';
+            }, 100);
+            let search = this.pSearch;
+            search = search?search:'enter-something';
+            this.leftSide = false;
+            this.$router.push('/home/search/'+search)
+
+        }
 
     },
     computed: {
@@ -241,6 +287,7 @@ export default {
         },
         getSubProduct(){
             this.subProduct = this.$store.getters.subProduct(this.hoverMainId);
+            console.log(this.subProduct);
 
         },
         ...mapGetters([
@@ -689,6 +736,18 @@ export default {
         color : #fff;
         text-decoration : underline;
 
+    }
+
+    .result{
+        position: absolute;
+        left: 20px;
+        top: 74px;
+        min-height: 100px;
+        width: 92%;
+        background: white;
+        border: 1px solid #ddd;
+        z-index: 1;
+        padding : 15px;
     }
 
 

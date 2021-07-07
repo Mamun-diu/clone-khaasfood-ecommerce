@@ -169,6 +169,31 @@ const routes = [
       name: "ProductCart",
       component: () => import("../views/local/Cart.vue")
   },
+  {
+      path: "/home/gift",
+      name: "GiftCart",
+      component: () => import("../views/local/GiftCard.vue")
+  },
+  {
+      path: "/home/main/:id",
+      name: "MainCategory",
+      component: () => import("../views/local/ShowMain.vue")
+  },
+  {
+      path: "/home/sub/:id",
+      name: "SubCategory",
+      component: () => import("../views/local/ShowSub.vue")
+  },
+  {
+    path: "/home/search/:slug",
+    name: "ProductSearch",
+    component: () => import("../views/local/Search.vue")
+  },
+  {
+    path: "/home/blog/:id",
+    name: "Blog",
+    component: () => import("../views/local/Blog.vue")
+  },
 
 
 ];

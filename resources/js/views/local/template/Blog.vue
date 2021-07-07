@@ -2,30 +2,17 @@
     <div class="">
         <h3 class="text-center mt-5 mb-5">LATEST BLOG</h3>
         <div class="row mx-2 mx-lg-5">
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="blog m-2" style="background: url('/storage/admin/1624718834_60d73df2ebd02.jpeg');">
+            <div v-for="(data,index) in blog" :key="index" class="col-12 col-md-6 col-lg-4">
+                <router-link :to="'/home/blog/'+data.id">
+                <div  class="blog m-2" :style="{ backgroundImage: 'url(' + data.image + ')' }">
                     <div class="blog-info">
-                        <p>February 18, 2020</p>
-                        <h5>কমলা জেলির উপকারিতা</h5>
+                        <p>{{ formateDate(data.created_at) }} </p>
+                        <h5>{{ data.title }} </h5>
                     </div>
                 </div>
+                </router-link>
             </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="blog m-2" style="background: url('/storage/admin/1624719098_60d73efab0b0b.jpeg');">
-                    <div class="blog-info">
-                        <p>April 23, 2020</p>
-                        <h5>চালের গুঁড়ায় শীতকালীন নানা রকম পিঠা</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="blog m-2" style="background: url('/storage/admin/1624719163_60d73f3b601a8.jpeg');">
-                    <div class="blog-info">
-                        <p>June 02, 2020</p>
-                        <h5>খেজুরের যত কথা</h5>
-                    </div>
-                </div>
-            </div>
+
         </div>
 
         <h3 class="text-center mt-5 mb-5">OUR PROMISES</h3>
@@ -57,7 +44,30 @@
 
 <script>
 export default {
+    data(){
+        return{
+            blog : [],
+        }
+    },
+    methods:{
+        formateDate(timestamp){
+            function formatDate(date) {
+                return date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear() + " " +  ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2) + ":" + ('0' + date.getSeconds()).slice(-2) + ' ' + (date.getHours() < 12 ? 'AM' : 'PM');
+            }
 
+
+            var date = new Date(timestamp);
+            return formatDate(date);
+        }
+    },
+    computed: {
+        getBlog(){
+            this.blog = this.$store.state.all.blog;
+        }
+    },
+    mounted() {
+        this.getBlog
+    },
 }
 </script>
 

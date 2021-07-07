@@ -49,6 +49,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
     addToCart: function addToCart(id, quantity) {
       this.$store.getters.cartItem(id, quantity);
+    },
+    scrollTop: function scrollTop() {
+      document.documentElement.scrollTop = 0;
     }
   },
   computed: {
@@ -76,6 +79,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   },
   mounted: function mounted() {
     this.getProduct;
+    this.scrollTop();
   }
 });
 

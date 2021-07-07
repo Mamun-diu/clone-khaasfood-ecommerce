@@ -52,6 +52,15 @@ class KhaasProductController extends Controller
             'blog' => $blog,
         ]);
     }
+    public function getSearchResult($name){
+        if($name==''){
+            return response()->json('');
+        }
+        // $result = Product::where('name','like',"%{$id}%")->skip(0)->take(5)->get();
+        // return response()->json($result);
+        $result = KhaasProduct::where('title','like',"%{$name}%")->skip(0)->take(4)->with('images','tag')->get();
+        return response()->json($result);
+    }
 
     /**
      * Show the form for creating a new resource.

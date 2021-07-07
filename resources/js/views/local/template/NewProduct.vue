@@ -9,12 +9,12 @@
                 <div v-for="(data,index) in newProduct" :key="index" class="carousel-item" :class="index==0?'active':''">
                     <div class="d-flex">
                         <div v-for="(product,index) in data" :key="index" class="new-carousel">
-                            <a href="">
+                            <router-link :to="'/home/product/'+product.slug" >
                                 <img :src="'/'+product.images[0].image" class="" alt="...">
                                 <p>{{ title(product.title) }} </p>
                                 <span> {{ product.price }} </span>
-                            </a>
-                            <button>ADD TO CART</button>
+                            </router-link>
+                            <button @click="addToCart(product.id)">ADD TO CART</button>
                             <i class="fas fa-search" data-toggle="tooltip" data-placement="left" title="Quick view"></i>
                             <span class="tag">NEW</span>
 
@@ -39,12 +39,12 @@
                 <div v-for="(data,index) in popularProduct" :key="index" class="carousel-item" :class="index==0?'active':''">
                     <div class="d-flex">
                         <div v-for="(product,index) in data" :key="index" class="new-carousel">
-                            <a href="">
+                            <router-link :to="'/home/product/'+product.slug" >
                                 <img :src="'/'+product.images[0].image" class="" alt="...">
                                 <p>{{ title(product.title) }} </p>
                                 <span> {{ product.price }} </span>
-                            </a>
-                            <button>ADD TO CART</button>
+                            </router-link>
+                            <button @click="addToCart(product.id)">ADD TO CART</button>
                             <i class="fas fa-search" data-toggle="tooltip" data-placement="left" title="Quick view"></i>
                         </div>
                     </div>
@@ -78,7 +78,12 @@ export default {
     methods:{
         title(val){
             return val.slice(0,25);
-        }
+        },
+        addToCart(id){
+            this.$store.getters.cartItem(id);
+        },
+
+
     },
     computed: {
         getNew(){
@@ -130,6 +135,7 @@ export default {
     mounted() {
         this.getNew;
         this.getPopular;
+
 
     },
 }

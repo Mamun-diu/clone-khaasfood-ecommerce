@@ -62,11 +62,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         var mainCategory = [];
         var subCategory = [];
         var tempMain = "";
+        var tempId = null;
         var tempSub = "";
+        var tempSubId = null;
         product.forEach(function (p) {
           if (m == p.main_category_id) {
             mainCount++;
             tempMain = p.main.name;
+            tempId = p.main.id;
 
             if (!sub.includes(p.sub_category_id)) {
               sub.push(p.sub_category_id);
@@ -78,9 +81,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
             if (s == p.sub_category_id) {
               subCount++;
               tempSub = p.sub.name;
+              tempSubId = p.sub.id;
             }
           });
           subCategory.push({
+            id: tempSubId,
             name: tempSub,
             count: subCount
           });
@@ -89,6 +94,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         });
         sub = [];
         mainCategory.push({
+          id: tempId,
           name: tempMain,
           count: mainCount
         });
@@ -168,16 +174,10 @@ var _hoisted_4 = {
   "class": "d-flex justify-content-center flex-wrap"
 };
 var _hoisted_5 = {
-  href: ""
-};
-var _hoisted_6 = {
-  href: ""
-};
-var _hoisted_7 = {
   "class": "d-flex flex-wrap px-2 px-lg-5"
 };
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fas fa-search",
   "data-toggle": "tooltip",
   "data-placement": "left",
@@ -186,25 +186,25 @@ var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 /* HOISTED */
 );
 
-var _hoisted_9 = {
+var _hoisted_7 = {
   key: 0,
   "class": "tag"
 };
-var _hoisted_10 = {
+var _hoisted_8 = {
   key: 1,
-  "class": "tag px-3 bg-danger",
+  "class": "tag px-md-3 bg-danger span2",
   style: {
     "font-size": "8px"
   }
 };
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("SOLD");
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("SOLD");
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1
 /* HOISTED */
 );
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("OUT");
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("OUT");
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
 
@@ -214,24 +214,46 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("ul", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.category, function (data, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("li", {
       key: index
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h6", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(data.main[0].name), 1
-    /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(data.main[0].count) + " product", 1
-    /* TEXT */
-    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("ul", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(data.sub, function (sub, index) {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+      to: '/home/main/' + data.main[0].id
+    }, {
+      "default": _withId(function () {
+        return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h6", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(data.main[0].name), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(data.main[0].count) + " product", 1
+        /* TEXT */
+        )];
+      }),
+      _: 2
+      /* DYNAMIC */
+
+    }, 1032
+    /* PROPS, DYNAMIC_SLOTS */
+    , ["to"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("ul", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(data.sub, function (sub, index) {
       return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("li", {
         key: index
-      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h6", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(sub.name), 1
-      /* TEXT */
-      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(sub.count) + " product", 1
-      /* TEXT */
-      )])]);
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+        to: '/home/sub/' + sub.id
+      }, {
+        "default": _withId(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h6", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(sub.name), 1
+          /* TEXT */
+          ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(sub.count) + " product", 1
+          /* TEXT */
+          )];
+        }),
+        _: 2
+        /* DYNAMIC */
+
+      }, 1032
+      /* PROPS, DYNAMIC_SLOTS */
+      , ["to"])]);
     }), 128
     /* KEYED_FRAGMENT */
     ))])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.product, function (data, index) {
+  ))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.product, function (data, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
       key: index,
       "class": "new-carousel mb-4"
@@ -264,7 +286,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       }
     }, "ADD TO CART", 10
     /* CLASS, PROPS */
-    , ["disabled", "onClick"]), _hoisted_8, data.tag.name == 'NEW' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_9, "NEW")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), data.tag.name == 'SOLD OUT' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_10, [_hoisted_11, _hoisted_12, _hoisted_13])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+    , ["disabled", "onClick"]), _hoisted_6, data.tag.name == 'NEW' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_7, "NEW")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), data.tag.name == 'SOLD OUT' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_8, [_hoisted_9, _hoisted_10, _hoisted_11])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
   }), 128
   /* KEYED_FRAGMENT */
   ))])]);
@@ -295,7 +317,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_public_assets_image_unsplash_jpg__WEBPACK_IMPORTED_MODULE_2__.default);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.top[data-v-8e885388]{\n        background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n        position : relative;\n        height : 140px;\n}\n.top .opacity[data-v-8e885388]{\n        position : absolute;\n        left : 0;\n        top : 0;\n        right : 0;\n        bottom : 0;\n        background : rgba(0,0,0,0.8);\n        z-index: 1;\n}\n.top .data[data-v-8e885388]{\n        /* position : absolute;\n        left : 50%;\n        top : 20%;\n        transform: translate(-50%,-50%);\n        z-index: 2; */\n}\n.top ul[data-v-8e885388]{\n}\n.top ul li[data-v-8e885388]{\n        margin-right: 35px;\n        position: relative;\n}\n.top ul li a[data-v-8e885388]{\n        padding-bottom: 27px;\n        display: inline-block;\n}\n.top ul a h6[data-v-8e885388]{\n        color : #fff;\n        margin-bottom: 4px;\n}\n.top ul a p[data-v-8e885388]{\n        margin : 0;\n        color : #ddd;\n        font-size: 13px;\n}\n.top ul ul[data-v-8e885388]{\n        background : #111;\n        padding : 20px 0px;\n        display: none;\n        position : absolute;\n        left: -25px;\n        width: 210px;\n}\n.top ul ul li[data-v-8e885388]{\n        margin-right: 0;\n}\n.top ul ul li a[data-v-8e885388]{\n        display: block;\n        /* margin-left : -65px; */\n        text-align: center;\n}\n.top ul li:hover ul[data-v-8e885388]{\n        display: block;\n}\n.new-carousel[data-v-8e885388]{\n        position : relative;\n        overflow: hidden;\n        margin : 0 2.5%;\n        width : 20%;\n        text-align: center;\n}\n.new-carousel i[data-v-8e885388]{\n        position: absolute;\n        top: 2px;\n        right: -50px;\n        background: #fff;\n        color: #111;\n        font-size: 20px;\n        padding: 15px;\n        box-shadow: 0px 0px 6px 0px #ddd;\n        transition: 0.3s ease;\n        cursor: pointer;\n}\n.new-carousel img[data-v-8e885388]{\n        width : 100%;\n}\n.new-carousel p[data-v-8e885388]{\n        color : #222;\n        font-family: tahoma;\n        text-align: center;\n        margin : 5px 0;\n}\n.new-carousel span[data-v-8e885388]{\n        color: #212020;\n        background: #C8E8E4;\n        display: inline-block;\n        padding: 2px 12px;\n        border-radius: 20px;\n        font-weight: 500;\n        font-size: 14px;\n}\n.new-carousel a[data-v-8e885388]{\n        display: inline-block;\n}\n.new-carousel button[data-v-8e885388]{\n        background: #6CA300;\n        color: #f5f5f5;\n        display: inline-block;\n        margin: 10px auto;\n        border-radius: 20px;\n        padding: 5px 13px;\n        transition : 0.2s;\n}\n.new-carousel button[data-v-8e885388]:hover{\n        background: #476903;\n}\n.new-carousel:hover i[data-v-8e885388]{\n        right : 0px;\n}\n.new-carousel .tag[data-v-8e885388]{\n        position: absolute;\n        left: 5px;\n        top: 5px;\n        color: #fff;\n        background: #438E44;\n        border-radius: 50%;\n        padding: 14px 8px;\n        font-size: 14px;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.top[data-v-8e885388]{\n        background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n        position : relative;\n        height : 140px;\n}\n.top .opacity[data-v-8e885388]{\n        position : absolute;\n        left : 0;\n        top : 0;\n        right : 0;\n        bottom : 0;\n        background : rgba(0,0,0,0.8);\n        z-index: 1;\n}\n.top .data[data-v-8e885388]{\n        /* position : absolute;\n        left : 50%;\n        top : 20%;\n        transform: translate(-50%,-50%);\n        z-index: 2; */\n}\n.top ul[data-v-8e885388]{\n}\n.top ul li[data-v-8e885388]{\n        margin-right: 35px;\n        position: relative;\n}\n.top ul li a[data-v-8e885388]{\n        padding-bottom: 27px;\n        display: inline-block;\n}\n.top ul a h6[data-v-8e885388]{\n        color : #fff;\n        margin-bottom: 4px;\n}\n.top ul a p[data-v-8e885388]{\n        margin : 0;\n        color : #ddd;\n        font-size: 13px;\n}\n.top ul ul[data-v-8e885388]{\n        background : #111;\n        padding : 20px 0px;\n        display: none;\n        position : absolute;\n        left: -25px;\n        width: 210px;\n}\n.top ul ul li[data-v-8e885388]{\n        margin-right: 0;\n}\n.top ul ul li a[data-v-8e885388]{\n        display: block;\n        /* margin-left : -65px; */\n        text-align: center;\n}\n.top ul li:hover ul[data-v-8e885388]{\n        display: block;\n}\n.top ul ul li[data-v-8e885388]{\n        transition : 0.2s;\n}\n.top ul ul li[data-v-8e885388]:hover{\n        border-right : 5px solid #d84012;\n}\n.new-carousel[data-v-8e885388]{\n        position : relative;\n        overflow: hidden;\n        margin : 0 2.5%;\n        width : 20%;\n        text-align: center;\n}\n.new-carousel i[data-v-8e885388]{\n        position: absolute;\n        top: 2px;\n        right: -50px;\n        background: #fff;\n        color: #111;\n        font-size: 20px;\n        padding: 15px;\n        box-shadow: 0px 0px 6px 0px #ddd;\n        transition: 0.3s ease;\n        cursor: pointer;\n}\n.new-carousel img[data-v-8e885388]{\n        width : 100%;\n}\n.new-carousel p[data-v-8e885388]{\n        color : #222;\n        font-family: tahoma;\n        text-align: center;\n        margin : 5px 0;\n}\n.new-carousel span[data-v-8e885388]{\n        color: #212020;\n        background: #C8E8E4;\n        display: inline-block;\n        padding: 2px 12px;\n        border-radius: 20px;\n        font-weight: 500;\n        font-size: 14px;\n}\n.new-carousel a[data-v-8e885388]{\n        display: inline-block;\n}\n.new-carousel button[data-v-8e885388]{\n        background: #6CA300;\n        color: #f5f5f5;\n        display: inline-block;\n        margin: 10px auto;\n        border-radius: 20px;\n        padding: 5px 13px;\n        transition : 0.2s;\n}\n.new-carousel button[data-v-8e885388]:hover{\n        background: #476903;\n}\n.new-carousel:hover i[data-v-8e885388]{\n        right : 0px;\n}\n.new-carousel .tag[data-v-8e885388]{\n        position: absolute;\n        left: 5px;\n        top: 5px;\n        color: #fff;\n        background: #438E44;\n        border-radius: 50%;\n        padding: 14px 8px;\n        font-size: 14px;\n}\n@media (min-width: 1200px) {\n}\n@media (max-width : 1199px){\n.top ul a h6[data-v-8e885388]{\n            font-size: 14px;\n}\n.top ul a p[data-v-8e885388]{\n            font-size: 12px;\n}\n.top ul li[data-v-8e885388]{\n            margin-right: 20px;\n}\n.top ul ul[data-v-8e885388]{\n            width: 140px;\n}\n}\n@media (max-width : 1024px){\n.top ul a h6[data-v-8e885388]{\n            font-size: 14px;\n}\n.top ul a p[data-v-8e885388]{\n            font-size: 12px;\n}\n.top ul li[data-v-8e885388]{\n            margin-right: 20px;\n}\n.top ul ul[data-v-8e885388]{\n            width: 140px;\n}\n}\n@media (max-width : 991px){\n.top ul a h6[data-v-8e885388]{\n            font-size: 16px;\n}\n.top ul a p[data-v-8e885388]{\n            font-size: 14px;\n}\n.data h2[data-v-8e885388]{\n            font-size : 28px;\n}\n.top[data-v-8e885388]{\n            height : 180px;\n}\n.top ul ul[data-v-8e885388]{\n            z-index: 3;\n}\n.top ul li a[data-v-8e885388]{\n            padding-bottom: 10px;\n}\n.top ul li[data-v-8e885388]{\n            margin-bottom : 10px;\n}\n.top ul ul[data-v-8e885388]{\n            width: 160px;\n}\n}\n@media (max-width: 767px){\n.new-carousel .tag[data-v-8e885388]{\n            padding: 10px 7px;\n            font-size: 10px;\n}\n.new-carousel .span2[data-v-8e885388]{\n            padding: 9px;\n            font-size: 8px !important;\n}\n.new-carousel p[data-v-8e885388], .new-carousel span[data-v-8e885388] {\n            font-size: 13px;\n}\n.new-carousel button[data-v-8e885388]{\n            font-size: 10px;\n}\n.top ul a h6[data-v-8e885388]{\n            font-size: 14px;\n}\n.top ul a p[data-v-8e885388]{\n            font-size: 12px;\n}\n.data h2[data-v-8e885388]{\n            font-size : 24px;\n}\n.top[data-v-8e885388]{\n            height : 170px;\n}\n.top ul ul[data-v-8e885388]{\n            z-index: 3;\n}\n.top ul li a[data-v-8e885388]{\n            padding-bottom: 10px;\n}\n.top ul li[data-v-8e885388]{\n            margin-bottom : 10px;\n}\n.top ul ul[data-v-8e885388]{\n            width: 150px;\n}\n}\n@media(max-width : 575px){\n.new-carousel .tag[data-v-8e885388]{\n            padding: 8px 5px;\n            font-size: 7px;\n}\n.new-carousel .span2[data-v-8e885388]{\n            padding: 7px;\n            font-size: 5px !important;\n}\n.new-carousel p[data-v-8e885388], .new-carousel span[data-v-8e885388] {\n            font-size: 10px;\n}\n.new-carousel button[data-v-8e885388]{\n            font-size: 8px;\n}\n.top ul a h6[data-v-8e885388]{\n            font-size: 12px;\n}\n.top ul a p[data-v-8e885388]{\n            font-size: 10px;\n}\n.data h2[data-v-8e885388]{\n            font-size : 20px;\n}\n.top[data-v-8e885388]{\n            height : 170px;\n}\n.top ul ul[data-v-8e885388]{\n            z-index: 3;\n}\n.top ul li a[data-v-8e885388]{\n            padding-bottom: 10px;\n}\n.top ul li[data-v-8e885388]{\n            margin-bottom : 10px;\n}\n.top ul ul[data-v-8e885388]{\n            width: 140px;\n}\n}\n@media(max-width : 419px){\n.top[data-v-8e885388]{\n            height : 210px;\n}\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

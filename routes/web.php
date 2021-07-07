@@ -32,6 +32,7 @@ Route::prefix('home')->group(function () {
 
 });
 Route::get('/frontend/getAll',[KhaasProductController::class, 'getAll']);
+Route::get('/frontend/search/{name}',[KhaasProductController::class, 'getSearchResult']);
 
 // Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 //     return view('dashboard');

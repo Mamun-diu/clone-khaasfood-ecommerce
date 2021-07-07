@@ -16,6 +16,25 @@ export default createStore({
 
   },
   getters: {
+    getSubProduct:(state)=>(id)=>{
+        let obj = [];
+        state.all.product.forEach(function(p){
+            if(id==p.sub_category_id){
+                obj.push(p)
+            }
+        })
+        return obj;
+    },
+    getMainProduct:(state)=>(id)=>{
+        let obj = [];
+        state.all.product.forEach(function(p){
+            if(id==p.main_category_id){
+                obj.push(p)
+            }
+        })
+        return obj;
+    },
+
     getCartItem(state){
         let cart = [];
         let sum = 0;
@@ -92,7 +111,7 @@ export default createStore({
             val.forEach(function(w){
                 if(w.sub_category_id==v){
                     subCat = w.sub.name;
-                    product.push({id:w.id,title:w.title})
+                    product.push({id:w.id,title:w.title,slug:w.slug})
                 }
 
             })

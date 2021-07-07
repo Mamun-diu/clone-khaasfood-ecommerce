@@ -4,11 +4,11 @@
 
         <div class="main-menu row justify-content-center">
             <div v-for="(data,index) in main" :key="index" class="col-6 col-sm-4 col-md-3 col-lg-2">
-                <a href="">
+                <router-link :to="'/home/main/'+data.main.id">
                     <img width="130" :src="'/'+data.main.image" alt="">
                     <h4>{{data.main.name}}</h4>
                     <p>{{ data.count }} products</p>
-                </a>
+                </router-link>
 
             </div>
 

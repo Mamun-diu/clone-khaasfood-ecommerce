@@ -7,16 +7,16 @@
                 </div>
                 <ul class="d-flex justify-content-center flex-wrap">
                     <li v-for="(data,index) in category" :key="index">
-                        <a href="">
+                        <router-link :to="'/home/main/'+data.main[0].id">
                             <h6>{{ data.main[0].name }} </h6>
                             <p>{{ data.main[0].count }} product</p>
-                        </a>
+                        </router-link>
                         <ul>
                             <li v-for="(sub,index) in data.sub" :key="index">
-                                <a href="">
+                                <router-link :to="'/home/sub/'+sub.id">
                                     <h6>{{ sub.name }} </h6>
                                     <p>{{ sub.count }} product</p>
-                                </a>
+                                </router-link>
 
                             </li>
                         </ul>
@@ -36,7 +36,7 @@
                 <button :disabled="data.tag.name=='SOLD OUT'" :class="data.tag.name=='SOLD OUT'?'text-danger':''" @click="addToCart(data.id)">ADD TO CART</button>
                 <i class="fas fa-search" data-toggle="tooltip" data-placement="left" title="Quick view"></i>
                 <span v-if="data.tag.name == 'NEW'" class="tag">NEW</span>
-                <span v-if="data.tag.name == 'SOLD OUT'" class="tag px-3 bg-danger" style="font-size : 8px">SOLD<br>OUT</span>
+                <span v-if="data.tag.name == 'SOLD OUT'" class="tag px-md-3 bg-danger span2" style="font-size : 8px">SOLD<br>OUT</span>
             </div>
 
         </div>
@@ -79,11 +79,14 @@ export default {
                 let mainCategory = [];
                 let subCategory = [];
                 let tempMain = "";
+                let tempId = null;
                 let tempSub = "";
+                let tempSubId = null;
                 product.forEach(function(p){
                     if(m==p.main_category_id){
                         mainCount++;
                         tempMain = p.main.name;
+                        tempId = p.main.id
                         if(!sub.includes(p.sub_category_id)){
                             sub.push(p.sub_category_id);
                         }
@@ -94,14 +97,15 @@ export default {
                          if(s==p.sub_category_id){
                              subCount++;
                              tempSub = p.sub.name;
+                             tempSubId = p.sub.id;
                          }
                      })
-                     subCategory.push({name:tempSub,count:subCount})
+                     subCategory.push({id:tempSubId,name:tempSub,count:subCount})
                      subCount = 0;
                      tempSub = "";
                 });
                 sub = []
-                mainCategory.push({name:tempMain,count:mainCount});
+                mainCategory.push({id:tempId,name:tempMain,count:mainCount});
                 mainCount = 0;
                 obj.push({main:mainCategory,sub:subCategory});
 
@@ -204,6 +208,12 @@ export default {
     .top ul li:hover ul{
         display: block;
     }
+    .top ul ul li{
+        transition : 0.2s;
+    }
+    .top ul ul li:hover{
+        border-right : 5px solid #d84012;
+    }
 
     .new-carousel{
         position : relative;
@@ -272,4 +282,151 @@ export default {
 
     }
 
+    @media (min-width: 1200px) {
+
+    }
+    @media (max-width : 1199px){
+        .top ul a h6{
+            font-size: 14px;
+        }
+        .top ul a p{
+            font-size: 12px;
+        }
+        .top ul li{
+            margin-right: 20px;
+        }
+        .top ul ul{
+            width: 140px;
+        }
+    }
+    @media (max-width : 1024px){
+
+        .top ul a h6{
+            font-size: 14px;
+        }
+        .top ul a p{
+            font-size: 12px;
+        }
+        .top ul li{
+            margin-right: 20px;
+        }
+        .top ul ul{
+            width: 140px;
+        }
+    }
+    @media (max-width : 991px){
+        .top ul a h6{
+            font-size: 16px;
+        }
+        .top ul a p{
+            font-size: 14px;
+        }
+        .data h2{
+            font-size : 28px;
+        }
+        .top{
+            height : 180px;
+        }
+        .top ul ul{
+            z-index: 3;
+        }
+        .top ul li a{
+            padding-bottom: 10px;
+        }
+        .top ul li{
+            margin-bottom : 10px;
+        }
+        .top ul ul{
+            width: 160px;
+        }
+    }
+    @media (max-width: 767px){
+        .new-carousel .tag{
+            padding: 10px 7px;
+            font-size: 10px;
+
+        }
+        .new-carousel .span2{
+            padding: 9px;
+            font-size: 8px !important;
+        }
+        .new-carousel p, .new-carousel span {
+            font-size: 13px;
+        }
+        .new-carousel button{
+            font-size: 10px;
+        }
+
+        .top ul a h6{
+            font-size: 14px;
+        }
+        .top ul a p{
+            font-size: 12px;
+        }
+        .data h2{
+            font-size : 24px;
+        }
+        .top{
+            height : 170px;
+        }
+        .top ul ul{
+            z-index: 3;
+        }
+        .top ul li a{
+            padding-bottom: 10px;
+        }
+        .top ul li{
+            margin-bottom : 10px;
+        }
+        .top ul ul{
+            width: 150px;
+        }
+    }
+    @media(max-width : 575px){
+        .new-carousel .tag{
+            padding: 8px 5px;
+            font-size: 7px;
+
+        }
+        .new-carousel .span2{
+            padding: 7px;
+            font-size: 5px !important;
+        }
+        .new-carousel p, .new-carousel span {
+            font-size: 10px;
+        }
+        .new-carousel button{
+            font-size: 8px;
+        }
+
+        .top ul a h6{
+            font-size: 12px;
+        }
+        .top ul a p{
+            font-size: 10px;
+        }
+        .data h2{
+            font-size : 20px;
+        }
+        .top{
+            height : 170px;
+        }
+        .top ul ul{
+            z-index: 3;
+        }
+        .top ul li a{
+            padding-bottom: 10px;
+        }
+        .top ul li{
+            margin-bottom : 10px;
+        }
+        .top ul ul{
+            width: 140px;
+        }
+    }
+    @media(max-width : 419px){
+        .top{
+            height : 210px;
+        }
+    }
 </style>

@@ -2,8 +2,8 @@
     <div class=" ">
         <div class="px-3 px-xl-5 footer">
             <div class="row py-5 ">
-                <div class="col-12 col-md-6 col-lg-3">
-                    <img src="assets/image/khaasfood-white-logo.png" alt="">
+                <div class="col-12 col-md-6 col-lg-3 mb-5">
+                    <img src="/assets/image/khaasfood-white-logo.png" alt="">
                     <p class="my-3">Khaas Food is an e-commerce platform coupled with a chain of brick-and-mortar stores for safe and pure foods in Bangladesh.</p>
                     <ul class="social mb-3">
                         <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i> </a></li>
@@ -12,7 +12,7 @@
                         <li><a href="#" target="_blank"><i class="fab fa-linkedin-in"></i> </a></li>
                     </ul>
                 </div>
-                <div class="col-12 col-md-6 col-lg-3">
+                <div class="col-12 col-md-6 col-lg-3 mb-5">
                     <h6 class="text-light mb-3">CONTACT US</h6>
                     <p class="head"><i class="fas fa-location-arrow"></i> Head Office:<br><span>Asadullah House, 5/1, Block- E, Lalmatia, Dhaka</span> </p>
 
@@ -27,7 +27,7 @@
                     khaasfood@gmail.com</span></p>
 
                 </div>
-                <div class="col-12 col-md-6 col-lg-3 links">
+                <div class="col-12 col-md-6 col-lg-3 mb-5 links">
                     <h6 class="text-light mb-3">USEFUL LINKS</h6>
                     <p><a href="">Privacy Policy</a></p>
                     <p><a href="">Terms & Conditions</a></p>
@@ -38,7 +38,7 @@
                     <p><a href="">Our Blog</a></p>
 
                 </div>
-                <div class="col-12 col-md-6 col-lg-3 newsletter">
+                <div class="col-12 col-md-6 col-lg-3 mb-5 newsletter">
                     <h6 class="text-light mb-3">NEWSLETTER</h6>
                     <p>Enter your email below and get informed of our offers, campaigns, new products time to time!</p>
                     <form action="">
@@ -55,7 +55,7 @@
                     <p class="text-light">KHAASFOOD &copy;2020</p>
                 </div>
                 <div class="col-md-6">
-                    <img src="assets\image\pay.png" alt="">
+                    <img src="/assets/image/pay.png" alt="">
                 </div>
             </div>
         </div>
